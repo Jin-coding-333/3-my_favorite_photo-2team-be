@@ -1,0 +1,33 @@
+{
+  "name": "3-my_favorite_photo-2team-be",
+  "version": "1.0.0",
+  "description": "Codeit FS3기 중급 프로젝트 \"최애의포토\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./app/app.js",
+    "seed": "node ./app/mock/seed.js",
+    "prettier": "prettier --write .",
+    "prettier-check": "prettier --check .",
+    "prisma": "npx prisma migrate dev",
+    "studio": "npx prisma studio"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.1.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-jwt": "^8.5.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.9",
+    "prisma": "^6.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
+}
