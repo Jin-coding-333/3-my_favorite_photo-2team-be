@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes/index.js";
-import { PORT } from "../config.js";
+import { PORT } from "../config/config.js";
 
 dotenv.config();
 const app = express();
@@ -13,7 +13,7 @@ app.use(
   })
 );
 app.use("/api", router);
-
+console.log(process.env.PORT);
 app.listen(PORT, () => {
   console.log(`PORT: ${PORT}번으로 시작`);
 });
