@@ -1,6 +1,6 @@
 import prisma from "./prisma";
 
-async function create() {}
+async function create({ email, password, imagePath }) {}
 
 async function findByEmail(email) {
   try {
