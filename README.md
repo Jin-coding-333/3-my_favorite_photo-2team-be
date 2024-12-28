@@ -4,7 +4,7 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 
 ## env 설정
 
-> <span style={color:red}> <b>{}</b> 값을 수정해주세요 </span>
+>  $\color{#5ab7b7}{}\ 값을\ 수정해주세요$
 
 - DATABASE_URL
   본인 DATABASE에 맞춰서 설정해주시면 됩니다. <br />
