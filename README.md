@@ -6,7 +6,7 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 
 >  $\color{#FF8000}\ {}\ 값을\ 수정해주세요$
 
-- $\color{#2E64FE}\ DATABASE_URL$
+- <span style="color:	#FF8C00">DATBASE_URL </span>
   본인 DATABASE에 맞춰서 설정해주시면 됩니다. <br />
   `DATABASE_URL="postgresql://{PostgreID}:{PostgrePW}@localhost:5432/{DB_NAME}"`
 
