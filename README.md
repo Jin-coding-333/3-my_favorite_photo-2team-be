@@ -4,14 +4,13 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 
 ## env 설정
 
-> $\color{#FF8000}\ {}\ 값을\ 수정해주세요$
-
 - $\color{#96F2D7}\ DATABASEURL$ <br />
   본인 DATABASE에 맞춰서 설정해주시면 됩니다. <br />
 
   ```env
   DATABASE_URL =
     "postgresql://{PostgreID}:{PostgrePW}@localhost:5432/{DB_NAME}";
+
   ```
 
 - $\color{#96F2D7}\ PORT$
@@ -19,6 +18,7 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 
   ```env
   PORT = 0000;
+
   ```
 
 - $\color{#96F2D7}\ {JWT\_SECRET}$
@@ -43,18 +43,18 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
   npm run prettier-check
   ```
 
-  ## Prisma
+## Prisma
 
-  - $\color{#96F2D7}\ migrate$ <br />
+- $\color{#96F2D7}\ migrate$ <br />
 
-    ```bash
-    npm run prisma
-    ```
+  ```bash
+  npm run prisma
 
-  - $\color{#96F2D7}\ studio$ <br />
-    ```bash
-    npm run studio
-    ```
+  ```
+
+- $\color{#96F2D7}\ studio$ <br />
+  bash
+  npm run studio
 
 ## Mock Data
 
