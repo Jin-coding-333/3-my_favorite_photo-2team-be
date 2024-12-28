@@ -6,7 +6,7 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 
 >  $\color{#FF8000}\ {}\ 값을\ 수정해주세요$
 
-- $\color{#96F2D7}\ {DATABASE_URL}$
+- $\color{#96F2D7}\ {DATABASE\_URL}$
   본인 DATABASE에 맞춰서 설정해주시면 됩니다. <br />
   `DATABASE_URL="postgresql://{PostgreID}:{PostgrePW}@localhost:5432/{DB_NAME}"`
 
@@ -14,7 +14,7 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
   자유롭게 설정 <br />
   `PORT=0000`
 
-- $\color{#96F2D7}\ {JWT_SECRET}$
+- $\color{#96F2D7}\ {JWT\_SECRET}$
   자유롭게 설정 <br />
   `JWT_SECRET={"full_stack_2team"}`
 
