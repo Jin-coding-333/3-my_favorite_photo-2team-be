@@ -1,13 +1,15 @@
 import express from "express";
-import prisma from "../../lib/prisma.js";
 import service from "./service.js";
+import { httpState } from "../../../config/config.js";
 
 const users = express.Router();
 users.get("/", async (req, res) => {
-  try {
-  } catch (err) {
-    console.log(err);
-  }
+  const { email, password } = req.body;
+  const user = await service.getUser({ email, password });
+
+  res.status(httpState.success).json({ ...user });
 });
+
+users.post("/signup", async (req, res) => {});
 
 export default users;
