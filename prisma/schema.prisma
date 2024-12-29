@@ -17,7 +17,6 @@ model User {
   id          String   @id @default(uuid())
   email       String   @unique
   nickName    String   @unique
-  name        String
   password    String
   phoneNumber String?
   point       Int      @default(0)

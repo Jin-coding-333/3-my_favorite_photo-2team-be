@@ -1,17 +1,32 @@
-import prisma from "./prisma";
+import hash from "./hash.js";
+import prisma from "./prisma.js";
 
-async function create({ email, password, imagePath }) {}
+const msg = (fncName) => `userRepo.js(${fncName})`;
+async function createUser({ email, password, nickName }) {
+  try {
+    const hashPw = await hash.hashValue(password);
+    await prisma.user.create({
+      data: {
+        email,
+        password: hashPw,
+        nickName,
+      },
+    });
+  } catch (err) {
+    console.error(msg(createUser.name), err);
+  }
+}
 
 async function findByEmail(email) {
   try {
     const user = await prisma.user.findUnique({
-      data: {
+      where: {
         email,
       },
     });
     return user;
   } catch (err) {
-    console.error(`userRepo.js(${findByEmail.name})`, err);
+    console.error(msg(findByEmail.name), err);
   }
 }
 
@@ -23,5 +38,6 @@ function userDataFilter(user) {
 const userRepo = {
   findByEmail,
   userDataFilter,
+  createUser,
 };
 export default userRepo;

@@ -1,4 +1,6 @@
-export const { PORT, JWT_SECRET } = process.env;
+import dotenv from "dotenv";
+dotenv.config();
+export const { PORT, JWT_SECRET, ORIGIN } = process.env;
 export const httpState = {
   success: {
     number: 200,

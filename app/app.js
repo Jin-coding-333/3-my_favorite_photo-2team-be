@@ -1,15 +1,14 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes/index.js";
-import { PORT } from "../config/config.js";
+import { ORIGIN, PORT } from "../config/config.js";
 
-dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "*",
+    origin: ORIGIN || "*",
+    credentials: true,
   })
 );
 app.use("/api", router);

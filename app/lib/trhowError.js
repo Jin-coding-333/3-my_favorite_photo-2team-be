@@ -1,4 +1,4 @@
-import { httpState } from "../../config/config";
+import { httpState } from "../../config/config.js";
 
 export default function throwError({
   errorMsg = httpState.notImplemented.string,

@@ -6,5 +6,6 @@ const verifyAccessToken = expressjwt({
   algorithms: ["HS256"],
   requestProperty: "user",
 });
+
 const auth = { verifyAccessToken };
 export default auth;
