@@ -15,7 +15,7 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
   ```
 
 - $\color{#96F2D7}\ PORT$ <br />
-  자유롭게 설정 <br />
+  dev 환경에선 자유롭게 설정,추후 논의 <br />
 
   ```javascript
   PORT = 8000;
@@ -71,7 +71,7 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
   npm run seed
   ```
 
-## 구조
+## 폴더 구조
 
 ### prisma
 
@@ -93,5 +93,13 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
    databse와 상호작용 코드
 3. $\color{#96F2D7}\ routes$ <br />
    express router 코드
+   <img width="188" alt="image" src="https://github.com/user-attachments/assets/e29c2246-65ba-4bca-91b7-961994dc7e73" />
+   
 4. $\color{#96F2D7}\ utils$ <br/>
    모듈화된 코드
+   예시 
+   ```javascript
+   import { PrismaClient } from "@prisma/client";
+   const prisma = new PrismaClient();
+   export default prisma;
+   ```

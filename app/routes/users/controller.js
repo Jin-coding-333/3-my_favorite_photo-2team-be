@@ -25,7 +25,19 @@ users.post("/login", async (req, res) => {
   const user = await service.login({ email, password });
   const accessToken = await service.createToken(user);
   const refreshToken = await service.createToken(user, "refresh");
-  res.status(httpState.success.number).json({ accessToken, refreshToken });
+  res
+    .status(httpState.success.number)
+    .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      maxAge: 60 * 60 * 1000,
+    })
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+    })
+    .json({ accessToken, refreshToken });
 });
 
 export default users;

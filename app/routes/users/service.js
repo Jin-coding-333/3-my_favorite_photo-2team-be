@@ -2,7 +2,6 @@ import { JWT_SECRET } from "../../../config/config.js";
 import hash from "../../utils/hash.js";
 import throwError from "../../utils/trhowError.js";
 import userRepo from "../../repositories/userRepository.js";
-// import auth from "../../middlewares/auth.js";
 import jwt from "jsonwebtoken";
 
 async function getUser({ email }) {
