@@ -96,23 +96,23 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 
    #### routes tree
 
-   <br />
    <img style="border-radius:10px;" width="188" alt="image" src="https://github.com/user-attachments/assets/e29c2246-65ba-4bca-91b7-961994dc7e73" />
    <br />
+   코드 예시
    <br />
+
    $\color{#96F2D7}\ controller.js$
 
    ```javascript
    import express from "express";
    import service from "./service.js";
-   import { httpState } from "../../../config/config.js";
 
    const users = express.Router();
    users.get("/data", async (req, res) => {
      const { email } = req.user;
      const user = await service.getUser({ email });
 
-     res.status(httpState.success).json({ ...user });
+     res.status(200).json({ ...user });
    });
    ```
 

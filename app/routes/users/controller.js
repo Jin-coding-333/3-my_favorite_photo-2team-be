@@ -7,7 +7,7 @@ users.get("/data", async (req, res) => {
   const { email } = req.user;
   const user = await service.getUser({ email });
 
-  res.status(httpState.success).json({ ...user });
+  res.status(httpState.success.number).json({ ...user });
 });
 
 users.post("/signup", (req, res) => {
@@ -29,12 +29,10 @@ users.post("/login", async (req, res) => {
     .status(httpState.success.number)
     .cookie("accessToken", accessToken, {
       httpOnly: true,
-      sameSite: "strict",
       maxAge: 60 * 60 * 1000,
     })
     .cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      sameSite: "strict",
       maxAge: 14 * 24 * 60 * 60 * 1000,
     })
     .json({ accessToken, refreshToken });
