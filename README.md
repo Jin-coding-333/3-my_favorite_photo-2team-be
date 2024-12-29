@@ -75,23 +75,23 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 
 ### prisma
 
-prisma 스키마 작성 하는 부분
+- prisma 스키마 작성 하는 부분
 
 ### mock
 
-mock data를 가지고 있는 곳
+- mock data를 가지고 있는 곳
 
 ### config
 
-config.js에 설정 값들을 작성 하는 곳
+- config.js에 설정 값들을 작성 하는 곳
 
 ### app
 
-1. middlewares <br />
+1. $\color{#96F2D7}\ middlewares$ <br />
    express 미들웨어 코드
-2. repositories <br />
+2. $\color{#96F2D7}\ repositories$ <br />
    databse와 상호작용 코드
-3. routes <br />
+3. $\color{#96F2D7}\ routes$ <br />
    express router 코드
-4. utils <br/>
+4. $\color{#96F2D7}\ utils$ <br/>
    모듈화된 코드
