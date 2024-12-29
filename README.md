@@ -132,8 +132,8 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
    ```
 
 4. $\color{#96F2D7}\ utils$ <br/>
-   모듈화된 코드
-   예시
+   모듈화된 코드 <br />
+   예시 
    ```javascript
    import { PrismaClient } from "@prisma/client";
    const prisma = new PrismaClient();
