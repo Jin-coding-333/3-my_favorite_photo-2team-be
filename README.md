@@ -92,12 +92,46 @@ Codeit FS3기 중급 프로젝트 "최애의포토"
 2. $\color{#96F2D7}\ repositories$ <br />
    databse와 상호작용 코드
 3. $\color{#96F2D7}\ routes$ <br />
-   express router 코드
+   express router 코드 <br />
+   routes tree
+   <br />
    <img width="188" alt="image" src="https://github.com/user-attachments/assets/e29c2246-65ba-4bca-91b7-961994dc7e73" />
-   
+   <br />
+   <br />
+   $\color{#96F2D7}\ controller.js$
+
+   ```javascript
+   import express from "express";
+   import service from "./service.js";
+   import { httpState } from "../../../config/config.js";
+
+   const users = express.Router();
+   users.get("/data", async (req, res) => {
+     const { email } = req.user;
+     const user = await service.getUser({ email });
+
+     res.status(httpState.success).json({ ...user });
+   });
+   ```
+
+   $\color{#96F2D7}\ service.js$
+
+   ```javascript
+   async function getUser({ email }) {
+     try {
+       const findUser = await userRepo.findByEmail(email);
+       return userRepo.userDataFilter(findUser);
+     } catch (err) {
+       console.error(err);
+     }
+   }
+   const service = { getUser };
+   export default service;
+   ```
+
 4. $\color{#96F2D7}\ utils$ <br/>
    모듈화된 코드
-   예시 
+   예시
    ```javascript
    import { PrismaClient } from "@prisma/client";
    const prisma = new PrismaClient();
