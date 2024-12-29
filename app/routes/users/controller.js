@@ -23,8 +23,8 @@ users.post("/signup", (req, res) => {
 users.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await service.login({ email, password });
-  const accessToken = service.createToken(user);
-  const refreshToken = service.createToken(user, "refresh");
+  const accessToken = await service.createToken(user);
+  const refreshToken = await service.createToken(user, "refresh");
   res.status(httpState.success.number).json({ accessToken, refreshToken });
 });
 

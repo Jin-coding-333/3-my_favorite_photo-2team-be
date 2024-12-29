@@ -1,5 +1,5 @@
-import hash from "./hash.js";
-import prisma from "./prisma.js";
+import hash from "../utils/hash.js";
+import prisma from "../utils/prisma.js";
 
 const msg = (fncName) => `userRepo.js(${fncName})`;
 async function createUser({ email, password, nickName }) {
