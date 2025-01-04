@@ -13,7 +13,7 @@ async function createUser({ email, password, nickName }) {
       },
     });
   } catch (err) {
-    console.error(msg(createUser.name), err);
+    console.error(msg("createUser"), err);
   }
 }
 
@@ -26,7 +26,7 @@ async function findByEmail(email) {
     });
     return user;
   } catch (err) {
-    console.error(msg(findByEmail.name), err);
+    console.error(msg("findByEmail"), err);
   }
 }
 
