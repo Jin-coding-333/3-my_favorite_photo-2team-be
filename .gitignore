@@ -1,4 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+*.http
 
 # dependencies
 /node_modules
@@ -239,3 +240,5 @@ gradle-app.setting
 # IDEs
 .idea/
 .vscode
+http/users.http
+
