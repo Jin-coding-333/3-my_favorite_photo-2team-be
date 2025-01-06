@@ -1,5 +1,5 @@
 import { expressjwt } from "express-jwt";
-import { JWT_SECRET } from "../../config/config";
+import { JWT_SECRET } from "../../config/config.js";
 
 const verifyAccessToken = expressjwt({
   secret: JWT_SECRET,
@@ -7,5 +7,5 @@ const verifyAccessToken = expressjwt({
   requestProperty: "user",
 });
 
-const auth = { verifyAccessToken };
-export default auth;
+const authMiddleware = { verifyAccessToken };
+export default authMiddleware;

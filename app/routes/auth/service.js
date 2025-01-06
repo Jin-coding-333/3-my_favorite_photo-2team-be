@@ -14,20 +14,25 @@ async function getUser({ email }) {
 }
 
 async function verifyPassword(password, password2) {
-  const match = await hash.compare(password, password2);
-  if (!match) throwError();
-  else return;
+  try {
+    const match = await hash.compare(password, password2);
+    if (!!!match) throwError("errorMsg", 401);
+    return match;
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function login({ email, password }) {
   const findUser = await userRepo.findByEmail(email);
-  verifyPassword(password, findUser.password);
-  return userRepo.userDataFilter(findUser);
+  const next = await verifyPassword(password, findUser.password);
+  if (next) return userRepo.userDataFilter(findUser);
+  else return null;
 }
 
 async function createToken(user, type) {
   if (user) {
-    const payload = { user: user.email };
+    const payload = { email: user.email };
     const option = { expiresIn: type === "refresh" ? "2w" : "1h" };
 
     return jwt.sign(payload, JWT_SECRET, option);

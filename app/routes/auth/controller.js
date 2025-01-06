@@ -1,41 +1,63 @@
 import express from "express";
 import service from "./service.js";
 import { httpState } from "../../../config/config.js";
+import authMiddleware from "../../middlewares/auth.js";
 
-const users = express.Router();
-users.get("/data", async (req, res) => {
-  const { email } = req.user;
-  const user = await service.getUser({ email });
-
-  res.status(httpState.success.number).json({ ...user });
+const auth = express.Router();
+auth.get("/user", authMiddleware.verifyAccessToken, async (req, res) => {
+  try {
+    const user = await service.getUser({ email: req.user.email });
+    res.status(httpState.success.number).json({ ...user });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
-users.post("/signup", (req, res) => {
+auth.post("/signup", (req, res) => {
   const { email, password, nickName } = req.body;
-  service.signUp({
-    email,
-    password,
-    nickName,
-  });
-  res.status(httpState.created.number).send("user created");
+  try {
+    service.signUp({
+      email,
+      password,
+      nickName,
+    });
+    res.status(httpState.created.number).send("user created");
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-users.post("/login", async (req, res) => {
+auth.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await service.login({ email, password });
-  const accessToken = await service.createToken(user);
-  const refreshToken = await service.createToken(user, "refresh");
-  res
-    .status(httpState.success.number)
-    .cookie("accessToken", accessToken, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 1000,
-    })
-    .cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      maxAge: 14 * 24 * 60 * 60 * 1000,
-    })
-    .json({ accessToken, refreshToken });
+  try {
+    const user = await service.login({ email, password });
+    const accessToken = await service.createToken(user);
+    const refreshToken = await service.createToken(user, "refresh");
+    res
+      .status(httpState.success.number)
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000,
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        maxAge: 14 * 24 * 60 * 60 * 1000,
+      })
+      .json({ success: !!accessToken, accessToken, refreshToken });
+  } catch (err) {
+    console.log(err);
+    res.status(httpState.unauthorized.number).json({
+      success: false,
+    });
+  }
 });
 
-export default users;
+auth.get("/logout", authMiddleware.verifyAccessToken, (req, res) => {
+  console.log("logout", req.cookies);
+  req.user = null;
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+  res.status(httpState.success.number).send({ success: true });
+});
+
+export default auth;
