@@ -52,7 +52,7 @@ auth.post("/login", async (req, res) => {
   }
 });
 
-auth.get("/logout", authMiddleware.verifyAccessToken, (req, res) => {
+auth.get("/logout", (req, res) => {
   console.log("logout", req.cookies);
   req.user = null;
   res.clearCookie("accessToken");
