@@ -7,7 +7,8 @@ const auth = express.Router();
 auth.get("/user", authMiddleware.verifyAccessToken, async (req, res) => {
   try {
     const user = await service.getUser({ email: req.user.email });
-    res.status(httpState.success.number).json({ ...user });
+    console.log(user);
+    res.status(httpState.success.number).json({ user });
   } catch (err) {
     console.error(err);
   }
@@ -35,15 +36,11 @@ auth.post("/login", async (req, res) => {
     const refreshToken = await service.createToken(user, "refresh");
     res
       .status(httpState.success.number)
-      .cookie("accessToken", accessToken, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 1000,
-      })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         maxAge: 14 * 24 * 60 * 60 * 1000,
       })
-      .json({ success: !!accessToken, accessToken, refreshToken });
+      .json({ success: !!accessToken, accessToken });
   } catch (err) {
     console.log(err);
     res.status(httpState.unauthorized.number).json({
@@ -52,10 +49,20 @@ auth.post("/login", async (req, res) => {
   }
 });
 
-auth.get("/logout", authMiddleware.verifyAccessToken, (req, res) => {
+auth.post("/refresh", authMiddleware.verifyRefreshToken, async (req, res) => {
+  try {
+    const { refreshToken } = req.cookies;
+    const { email } = req.auth;
+    const accessToken = await service.refreshToken({ email, refreshToken });
+    res.status(httpState.success.number).json({ success: true, accessToken });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+auth.get("/logout", (req, res) => {
   console.log("logout", req.cookies);
   req.user = null;
-  res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
   res.status(httpState.success.number).send({ success: true });
 });

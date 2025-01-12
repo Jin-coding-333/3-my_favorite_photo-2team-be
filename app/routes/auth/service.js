@@ -39,9 +39,26 @@ async function createToken(user, type) {
   } else return null;
 }
 
+async function refreshToken({ email, refreshToken }) {
+  const user = await userRepo.findByEmail(email);
+  if (!user || !refreshToken) {
+    const error = new Error("Unauthorized");
+    error.code = 401;
+    throw error;
+  }
+  return createToken(user);
+}
+
 function signUp({ email, password, nickName }) {
   userRepo.createUser({ email, password, nickName });
 }
 
-const service = { getUser, verifyPassword, signUp, login, createToken };
+const service = {
+  getUser,
+  verifyPassword,
+  signUp,
+  login,
+  createToken,
+  refreshToken,
+};
 export default service;

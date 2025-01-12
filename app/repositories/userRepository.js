@@ -31,7 +31,7 @@ async function findByEmail(email) {
 }
 
 function userDataFilter(user) {
-  const { passowrd, ...rest } = user;
+  const { password, ...rest } = user;
   return rest;
 }
 
