@@ -23,6 +23,10 @@ async function findByEmail(email) {
       where: {
         email,
       },
+      include: {
+        card: true,
+        market: true,
+      },
     });
     return user;
   } catch (err) {

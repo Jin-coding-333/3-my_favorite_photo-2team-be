@@ -4,10 +4,10 @@ import { httpState } from "../../../config/config.js";
 import authMiddleware from "../../middlewares/auth.js";
 
 const auth = express.Router();
+
 auth.get("/user", authMiddleware.verifyAccessToken, async (req, res) => {
   try {
     const user = await service.getUser({ email: req.user.email });
-    console.log(user);
     res.status(httpState.success.number).json({ user });
   } catch (err) {
     console.error(err);
