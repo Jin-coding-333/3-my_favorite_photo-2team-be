@@ -49,16 +49,21 @@ auth.post("/login", async (req, res) => {
   }
 });
 
-auth.post("/refresh", authMiddleware.verifyRefreshToken, async (req, res) => {
-  try {
-    const { refreshToken } = req.cookies;
-    const { email } = req.auth;
-    const accessToken = await service.refreshToken({ email, refreshToken });
-    res.status(httpState.success.number).json({ success: true, accessToken });
-  } catch (err) {
-    console.error(err);
+auth.post(
+  "/refresh",
+  authMiddleware.verifyRefreshToken,
+  async (req, res, next) => {
+    try {
+      const { refreshToken } = req.cookies;
+      const { email } = req.auth;
+      const accessToken = await service.refreshToken({ email, refreshToken });
+      res.status(httpState.success.number).json({ success: true, accessToken });
+    } catch (err) {
+      console.error("refresh", err);
+      next(err);
+    }
   }
-});
+);
 
 auth.get("/logout", (req, res) => {
   console.log("logout", req.cookies);

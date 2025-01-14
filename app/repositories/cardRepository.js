@@ -24,8 +24,20 @@ async function createCard(body) {
   }
 }
 
+async function findMarketCards(userId) {
+  try {
+    return await prisma.shop.findMany({
+      where: {
+        userId,
+      },
+    });
+  } catch (err) {
+    console.error(msg("findMarketCards"), err);
+  }
+}
 const cardRepo = {
   findManyCards,
   createCard,
+  findMarketCards,
 };
 export default cardRepo;

@@ -5,6 +5,8 @@ import { ORIGIN, PORT } from "../config/config.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
