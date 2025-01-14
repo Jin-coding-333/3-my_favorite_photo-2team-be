@@ -1,0 +1,63 @@
+[
+    {
+      "email": "user1@example.com",
+      "nickName": "user1",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 100
+    },
+    {
+      "email": "user2@example.com",
+      "nickName": "user2",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 200
+    },
+    {
+      "email": "user3@example.com",
+      "nickName": "user3",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 300
+    },
+    {
+      "email": "user4@example.com",
+      "nickName": "user4",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 400
+    },
+    {
+      "email": "user5@example.com",
+      "nickName": "user5",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 500
+    },
+    {
+      "email": "user6@example.com",
+      "nickName": "user6",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 600
+    },
+    {
+      "email": "user7@example.com",
+      "nickName": "user7",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 700
+    },
+    {
+      "email": "user8@example.com",
+      "nickName": "user8",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 800
+    },
+    {
+      "email": "user9@example.com",
+      "nickName": "user9",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 900
+    },
+    {
+      "email": "user10@example.com",
+      "nickName": "user10",
+      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
+      "point": 1000
+    }
+  ]
+  
