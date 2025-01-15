@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./app/app.js",
-    "seed": "node ./app/mock/seed.js",
+    "seed": "node ./mock/seed.js",
     "prettier": "prettier --write .",
     "prettier-check": "prettier --check .",
     "prisma": "npx prisma migrate dev",
