@@ -13,7 +13,11 @@ async function createUser({ email, password, nickName }) {
       },
     });
   } catch (err) {
-    console.error(msg("createUser"), err);
+    console.log(err);
+    return {
+      code: err.code,
+      target: err.meta.target[0],
+    };
   }
 }
 
@@ -35,9 +39,25 @@ function userDataFilter(user) {
   return rest;
 }
 
+async function eventReset() {
+  try {
+    await prisma.user.updateMany({
+      where: {
+        event: true,
+      },
+      data: {
+        event: false,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 const userRepo = {
   findByEmail,
   userDataFilter,
   createUser,
+  eventReset,
 };
 export default userRepo;

@@ -32,7 +32,7 @@ async function login({ email, password }) {
 
 async function createToken(user, type) {
   if (user) {
-    const payload = { email: user.email };
+    const payload = { email: user.email, userId: user.id };
     const option = { expiresIn: type === "refresh" ? "2w" : "1h" };
 
     return jwt.sign(payload, JWT_SECRET, option);
@@ -49,8 +49,11 @@ async function refreshToken({ email, refreshToken }) {
   return createToken(user);
 }
 
-function signUp({ email, password, nickName }) {
-  userRepo.createUser({ email, password, nickName });
+async function signUp({ email, password, nickName }) {
+  const signup = await userRepo.createUser({ email, password, nickName });
+  if (signup) {
+    return signup;
+  }
 }
 
 const service = {
