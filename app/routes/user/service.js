@@ -22,7 +22,7 @@ const getCards = async (userId) => {
   return cards;
 };
 
-const getMarketCards = async (userId) => {
+const getShopCards = async (userId) => {
   const marketCards = await cardRepo.findMarketCards(userId);
   return marketCards;
 };
@@ -30,7 +30,7 @@ const getMarketCards = async (userId) => {
 const service = {
   create,
   getCards,
-  getMarketCards,
+  getShopCards,
 };
 
 export default service;

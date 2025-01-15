@@ -1,103 +1,102 @@
 [
-    {
-      "name": "Dragon Slayer",
-      "grade": "rare",
-      "genre": "fantasy",
-      "price": 1000,
-      "remainingQuantity": 10,
-      "totalQuantity": 50,
-      "description": "A powerful sword with mystical powers.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Phoenix Feather",
-      "grade": "legendary",
-      "genre": "mythical",
-      "price": 5000,
-      "remainingQuantity": 5,
-      "totalQuantity": 30,
-      "description": "A feather of the mythical phoenix, said to bring eternal life.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Elven Bow",
-      "grade": "epic",
-      "genre": "fantasy",
-      "price": 1200,
-      "remainingQuantity": 15,
-      "totalQuantity": 40,
-      "description": "A finely crafted bow used by the elven warriors.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Mystic Orb",
-      "grade": "legendary",
-      "genre": "mystical",
-      "price": 3000,
-      "remainingQuantity": 8,
-      "totalQuantity": 20,
-      "description": "An orb that holds the power of the elements.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Vampire Fang",
-      "grade": "rare",
-      "genre": "horror",
-      "price": 800,
-      "remainingQuantity": 20,
-      "totalQuantity": 60,
-      "description": "A fang of a powerful vampire lord.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Wizard's Hat",
-      "grade": "epic",
-      "genre": "fantasy",
-      "price": 1500,
-      "remainingQuantity": 7,
-      "totalQuantity": 25,
-      "description": "A hat that boosts the wearer's magical abilities.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Goblin Shield",
-      "grade": "common",
-      "genre": "fantasy",
-      "price": 300,
-      "remainingQuantity": 50,
-      "totalQuantity": 100,
-      "description": "A sturdy shield used by goblin warriors.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Demonic Amulet",
-      "grade": "legendary",
-      "genre": "dark",
-      "price": 4000,
-      "remainingQuantity": 3,
-      "totalQuantity": 10,
-      "description": "An amulet infused with demonic energy.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Knight's Armor",
-      "grade": "rare",
-      "genre": "medieval",
-      "price": 2000,
-      "remainingQuantity": 12,
-      "totalQuantity": 30,
-      "description": "A protective armor worn by valiant knights.",
-      "imagePath": "/uploads/404.svg"
-    },
-    {
-      "name": "Pirate's Cutlass",
-      "grade": "epic",
-      "genre": "adventure",
-      "price": 1800,
-      "remainingQuantity": 9,
-      "totalQuantity": 35,
-      "description": "A cutlass used by infamous pirates.",
-      "imagePath": "/uploads/404.svg"
-    }
-  ]
-  
+  {
+    "name": "Dragon Slayer",
+    "grade": "RARE",
+    "genre": "여행",
+    "price": 1,
+    "remainingQuantity": 10,
+    "totalQuantity": 50,
+    "description": "A powerful sword with mystical powers.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Phoenix Feather",
+    "grade": "LEGENDARY",
+    "genre": "풍경",
+    "price": 5,
+    "remainingQuantity": 5,
+    "totalQuantity": 30,
+    "description": "A feather of the mythical phoenix, said to bring eternal life.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Elven Bow",
+    "grade": "EPIC",
+    "genre": "인물",
+    "price": 1,
+    "remainingQuantity": 15,
+    "totalQuantity": 40,
+    "description": "A finely crafted bow used by the elven warriors.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Mystic Orb",
+    "grade": "LEGENDARY",
+    "genre": "사물",
+    "price": 3,
+    "remainingQuantity": 8,
+    "totalQuantity": 20,
+    "description": "An orb that holds the power of the elements.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Vampire Fang",
+    "grade": "RARE",
+    "genre": "여행",
+    "price": 8,
+    "remainingQuantity": 20,
+    "totalQuantity": 60,
+    "description": "A fang of a powerful vampire lord.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Wizard's Hat",
+    "grade": "EPIC",
+    "genre": "풍경",
+    "price": 1,
+    "remainingQuantity": 7,
+    "totalQuantity": 25,
+    "description": "A hat that boosts the wearer's magical abilities.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Goblin Shield",
+    "grade": "COMMON",
+    "genre": "인물",
+    "price": 3,
+    "remainingQuantity": 50,
+    "totalQuantity": 100,
+    "description": "A sturdy shield used by goblin warriors.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Demonic Amulet",
+    "grade": "LEGENDARY",
+    "genre": "사물",
+    "price": 4,
+    "remainingQuantity": 3,
+    "totalQuantity": 10,
+    "description": "An amulet infused with demonic energy.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Knight's Armor",
+    "grade": "RARE",
+    "genre": "여행",
+    "price": 2,
+    "remainingQuantity": 12,
+    "totalQuantity": 30,
+    "description": "A protective armor worn by valiant knights.",
+    "imagePath": "/uploads/404.svg"
+  },
+  {
+    "name": "Pirate's Cutlass",
+    "grade": "EPIC",
+    "genre": "풍경",
+    "price": 1,
+    "remainingQuantity": 9,
+    "totalQuantity": 35,
+    "description": "A cutlass used by infamous pirates.",
+    "imagePath": "/uploads/404.svg"
+  }
+]

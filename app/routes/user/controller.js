@@ -32,13 +32,14 @@ user
     "/my-cards",
     authMiddleware.verifyAccessToken,
     upload.single("imagePath"),
-    async (req, res) => {
+    async (req, res, next) => {
       try {
         await service.create({ ...req.body, imagePath: `/${req.file.path}` });
         res.status(httpState.success.number).json({
           success: true,
         });
       } catch (err) {
+        next(err);
         res.status(httpState.badRequest.number).send(err);
       }
     }
@@ -50,7 +51,7 @@ user.get(
   async (req, res, next) => {
     try {
       const { userId } = req.user;
-      const cards = await service.getMarketCards(userId);
+      const cards = await service.getShopCards(userId);
       res.status(httpState.success.number).json({ ...cards });
     } catch (err) {
       next(err);
@@ -59,10 +60,18 @@ user.get(
   }
 );
 
-user.get("/my-cards/exchange", async (req, res) => {
-  try {
-  } catch (err) {}
-});
+user.get(
+  "/my-cards/exchange",
+  authMiddleware.verifyAccessToken,
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+    } catch (err) {
+      next(err);
+      res.status(httpState.badRequest.number).send({ err });
+    }
+  }
+);
 
 user.get("/profile", async (req, res) => {
   try {
