@@ -4,30 +4,41 @@ import { httpState } from "../../../config/config.js";
 import authMiddleware from "../../middlewares/auth.js";
 
 const auth = express.Router();
+
 auth.get("/user", authMiddleware.verifyAccessToken, async (req, res) => {
   try {
     const user = await service.getUser({ email: req.user.email });
-    res.status(httpState.success.number).json({ ...user });
+    res.status(httpState.success.number).json({ user });
   } catch (err) {
     console.error(err);
   }
 });
 
-auth.post("/signup", (req, res) => {
+auth.post("/signup", async (req, res, next) => {
   const { email, password, nickName } = req.body;
-  try {
-    service.signUp({
-      email,
-      password,
-      nickName,
-    });
-    res.status(httpState.created.number).send("user created");
-  } catch (err) {
-    console.log(err);
+  const signup = await service.signUp({
+    email,
+    password,
+    nickName,
+  });
+  let msg = "";
+  if (signup && signup.code === "P2002") {
+    switch (signup.target) {
+      case "email":
+        msg = "이메일 중복입니다.";
+        break;
+      case "nickName":
+        msg = "닉네임 중복입니다.";
+        break;
+    }
+    res.status(401).json({ success: false, msg });
+    return;
   }
+  msg = "회원가입을 축하드립니다.";
+  res.status(httpState.created.number).json({ success: true, msg });
 });
 
-auth.post("/login", async (req, res) => {
+auth.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await service.login({ email, password });
@@ -35,27 +46,39 @@ auth.post("/login", async (req, res) => {
     const refreshToken = await service.createToken(user, "refresh");
     res
       .status(httpState.success.number)
-      .cookie("accessToken", accessToken, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 1000,
-      })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         maxAge: 14 * 24 * 60 * 60 * 1000,
       })
-      .json({ success: !!accessToken, accessToken, refreshToken });
+      .json({ success: !!accessToken, accessToken });
   } catch (err) {
-    console.log(err);
+    next(err);
     res.status(httpState.unauthorized.number).json({
       success: false,
     });
   }
 });
 
-auth.get("/logout", authMiddleware.verifyAccessToken, (req, res) => {
+auth.post(
+  "/refresh",
+  authMiddleware.refreshTokenChk,
+  authMiddleware.verifyRefreshToken,
+  async (req, res, next) => {
+    try {
+      const { refreshToken } = req.cookies;
+      const { email } = req.auth;
+      const accessToken = await service.refreshToken({ email, refreshToken });
+      res.status(httpState.success.number).json({ success: true, accessToken });
+    } catch (err) {
+      next(err);
+      res.status(httpState.badRequest.number).json({ success: false });
+    }
+  }
+);
+
+auth.get("/logout", (req, res) => {
   console.log("logout", req.cookies);
   req.user = null;
-  res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
   res.status(httpState.success.number).send({ success: true });
 });
