@@ -61,6 +61,7 @@ auth.post("/login", async (req, res, next) => {
 
 auth.post(
   "/refresh",
+  authMiddleware.refreshTokenChk,
   authMiddleware.verifyRefreshToken,
   async (req, res, next) => {
     try {
