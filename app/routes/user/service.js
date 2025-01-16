@@ -1,6 +1,17 @@
 import cardRepo from "../../repositories/cardRepository.js";
 import userRepo from "../../repositories/userRepository.js";
 
+async function getUser({ email }) {
+  const findUser = await userRepo.findByEmail(email);
+  return userRepo.userDataFilter(findUser);
+}
+
+const updateUser = async ({ email, data }) => {
+  const update = await userRepo.updateUser({ email, data });
+  if (!!update) return true;
+  return false;
+};
+
 const create = async (body) => {
   const {
     name,
@@ -51,6 +62,8 @@ const service = {
   getShopCards,
   getExchangeCards,
   eventReset,
+  getUser,
+  updateUser,
 };
 
 export default service;

@@ -61,15 +61,35 @@ user.get(
     res.status(201).json({ data: cards });
   }
 );
+
+user
+  .get("/point", authMiddleware.verifyAccessToken, async (req, res) => {
+    const { email } = req.user;
+    const user = await service.getUser({ email });
+    res.status(201).send(user.event);
+  })
+  .post("/point", authMiddleware.verifyAccessToken, async (req, res) => {
+    const { email } = req.user;
+    const update = await service.updateUser({
+      email,
+      data: { event: true },
+    });
+    if (!update) return res.status(401).send(false);
+
+    res.status(200).send(true);
+  });
+
 /** 정각마다 이벤트 상태 변경 코드 */
 cron.schedule("0 * * * *", async () => {
+  // const date = new Date();
   try {
-    console.log("user 정각");
+    console.log("Event Reset");
     await service.eventReset();
   } catch (err) {
     console.error("스케쥴 err~~~~~~", err);
   }
 });
+
 // user.get("/profile", async (req, res) => {
 //   try {
 //   } catch (err) {}

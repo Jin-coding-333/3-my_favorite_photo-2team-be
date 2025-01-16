@@ -21,6 +21,20 @@ async function createUser({ email, password, nickName }) {
   }
 }
 
+async function updateUser({ email, data }) {
+  try {
+    const updateUser = await prisma.user.update({
+      where: {
+        email,
+      },
+      data: { ...data },
+    });
+    return updateUser;
+  } catch (err) {
+    return { code: err.code };
+  }
+}
+
 async function findByEmail(email) {
   try {
     const user = await prisma.user.findUnique({
@@ -59,5 +73,6 @@ const userRepo = {
   userDataFilter,
   createUser,
   eventReset,
+  updateUser,
 };
 export default userRepo;
