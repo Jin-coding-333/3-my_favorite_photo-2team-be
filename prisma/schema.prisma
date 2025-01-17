@@ -51,17 +51,17 @@ model Card {
 }
 
 model Shop {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  userId    String
-  cardId    String   @unique
-  totalQuantity     Int      
-  remainingQuantity Int    
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  card      Card     @relation(fields: [cardId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  id                Int      @id @default(autoincrement())
+  title             String
+  content           String
+  userId            String
+  cardId            String   @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  remainingQuantity Int
+  totalQuantity     Int
+  card              Card     @relation(fields: [cardId], references: [id])
+  user              User     @relation(fields: [userId], references: [id])
 }
 
 model Purchase {
