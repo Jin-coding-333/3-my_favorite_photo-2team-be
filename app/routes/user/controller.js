@@ -67,15 +67,17 @@ user
   .get("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;
     const user = await service.getUser({ email });
+    if (!!!user) return res.status(401).send(null);
     res.status(201).send(user.event);
   })
   .post("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;
     const point = Math.floor(Math.random() * 9) + 1;
+    const now = new Date();
     const update = await service.updateUser({
       email,
       data: {
-        event: true,
+        event: now,
         point: {
           increment: point,
         },
