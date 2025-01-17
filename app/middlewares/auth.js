@@ -15,17 +15,20 @@ const verifyAccessToken = expressjwt({
 
 const refreshTokenChk = async (req, res, next) => {
   const { refreshToken } = req.cookies;
-  if (refreshToken) return next();
-  console.log("token 없음");
-  res.send("");
+  const { authorization } = req.headers;
+  const accessToken = authorization;
+  if (refreshToken && !!!accessToken) return next();
 };
 const accessTokenChk = async (req, res, next) => {
-  console.log(req.headers);
+  const { authorization } = req.headers;
+  const accessToken = authorization;
+  if (accessToken) next();
 };
 
 const authMiddleware = {
   verifyAccessToken,
   verifyRefreshToken,
   refreshTokenChk,
+  accessTokenChk,
 };
 export default authMiddleware;

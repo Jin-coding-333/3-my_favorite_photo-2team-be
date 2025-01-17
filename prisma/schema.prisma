@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,18 +9,18 @@ datasource db {
 
 model User {
   id           String         @id @default(uuid())
-  email        String         @unique
   nickName     String         @unique
   password     String
+  email        String         @unique
   point        Int            @default(0)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   event        DateTime?
   card         Card[]
-  shop         Shop[]
   notification Notification[]
-  purchase     Purchase[]
   pointLog     PointLog[]
+  purchase     Purchase[]
+  shop         Shop[]
 }
 
 model Notification {
@@ -34,66 +28,66 @@ model Notification {
   content   String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
   userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Card {
   id          String     @id @default(uuid())
-  uniqueId    String     @default("")
   name        String
   grade       String     @default("common")
   genre       String     @default("unknwon")
   price       Int        @default(0)
   description String     @default("")
   imagePath   String
+  userId      String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  uniqueId    String     @default("")
   user        User       @relation(fields: [userId], references: [id])
-  userId      String
-  shop        Shop?
-  purchase    Purchase[]
   exchange    Exchange[]
+  purchase    Purchase[]
+  shop        Shop?
 }
 
 model Shop {
   id        Int      @id @default(autoincrement())
   title     String
   content   String
-  user      User     @relation(fields: [userId], references: [id])
   userId    String
-  card      Card     @relation(fields: [cardId], references: [id])
   cardId    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  card      Card     @relation(fields: [cardId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Purchase {
   id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
   userId    String
   buyerId   String
-  card      Card     @relation(fields: [cardId], references: [id])
   cardId    String
   createdAt DateTime @default(now())
+  card      Card     @relation(fields: [cardId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Exchange {
   id          Int      @id @default(autoincrement())
   requesterId String
-  card        Card     @relation(fields: [cardId], references: [id])
   cardId      String
   targetCard  String
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
   status      String   @default("pending")
+  updatedAt   DateTime @updatedAt
+  card        Card     @relation(fields: [cardId], references: [id])
 }
 
 model PointLog {
   id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
   userId    String
   point     Int?
   pointType String
   createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
