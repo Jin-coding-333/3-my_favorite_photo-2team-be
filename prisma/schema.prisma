@@ -15,7 +15,7 @@ model User {
   point        Int            @default(0)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  event        DateTime?
+  event        DateTime       @default(now())
   card         Card[]
   notification Notification[]
   pointLog     PointLog[]
