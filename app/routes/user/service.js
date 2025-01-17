@@ -23,18 +23,20 @@ const create = async (body) => {
     description,
     imagePath,
   } = body;
-
-  return await cardRepo.createCard({
-    name,
-    userId,
-    grade,
-    genre,
-    price: parseInt(price),
-    remainingQuantity: parseInt(totalQuantity),
-    totalQuantity: parseInt(totalQuantity),
-    description,
-    imagePath,
-  });
+  const uniqueId = imagePath.split("/uploads/")[1].split(".")[0];
+  for (let i = 0; i < parseInt(totalQuantity); i++) {
+    await cardRepo.createCard({
+      uniqueId,
+      name,
+      userId,
+      grade,
+      genre,
+      price: parseInt(price),
+      description,
+      imagePath,
+    });
+  }
+  return true;
 };
 
 const getCards = async (userId) => {

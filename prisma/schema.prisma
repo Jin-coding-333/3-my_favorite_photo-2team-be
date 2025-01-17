@@ -21,7 +21,7 @@ model User {
   point        Int            @default(0)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  event        Boolean        @default(false)
+  event        DateTime?
   card         Card[]
   shop         Shop[]
   notification Notification[]
@@ -40,7 +40,7 @@ model Notification {
 
 model Card {
   id          String     @id @default(uuid())
-  uniqueId    Int        @default(0)
+  uniqueId    String     @default("")
   name        String
   grade       String     @default("common")
   genre       String     @default("unknwon")

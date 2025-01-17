@@ -49,18 +49,24 @@ async function findByEmail(email) {
 }
 
 function userDataFilter(user) {
-  const { password, ...rest } = user;
-  return rest;
+  try {
+    const { password, ...rest } = user;
+    return rest;
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function eventReset() {
   try {
     await prisma.user.updateMany({
       where: {
-        event: true,
+        event: {
+          not: null,
+        },
       },
       data: {
-        event: false,
+        event: null,
       },
     });
   } catch (err) {
