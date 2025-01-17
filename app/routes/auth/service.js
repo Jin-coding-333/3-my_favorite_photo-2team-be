@@ -7,13 +7,7 @@ import jwt from "jsonwebtoken";
 async function getUser({ email }) {
   try {
     const findUser = await userRepo.findByEmail(email);
-    const now = new Date();
-    await userRepo.updateUser({
-      email,
-      data: {
-        event: now,
-      },
-    });
+
     return userRepo.userDataFilter(findUser);
   } catch (err) {
     console.error(err);
@@ -34,6 +28,13 @@ async function login({ email, password }) {
   const findUser = await userRepo.findByEmail(email);
   const next = await verifyPassword(password, findUser.password);
   if (next) {
+    const now = new Date();
+    await userRepo.updateUser({
+      email,
+      data: {
+        event: now,
+      },
+    });
     return userRepo.userDataFilter(findUser);
   } else return null;
 }
@@ -62,6 +63,13 @@ async function refreshToken({ email, refreshToken }) {
     error.code = 401;
     throw error;
   }
+  const now = new Date();
+  await userRepo.updateUser({
+    email,
+    data: {
+      event: now,
+    },
+  });
   return createToken(user);
 }
 

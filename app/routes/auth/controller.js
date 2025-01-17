@@ -11,7 +11,9 @@ auth.get(
   authMiddleware.verifyAccessToken,
   async (req, res) => {
     try {
+      console.log("getUser");
       const user = await service.getUser({ email: req.user.email });
+      console.log(user);
       res.status(httpState.success.number).json({ user });
     } catch (err) {
       console.error(err);
@@ -70,6 +72,7 @@ auth.post(
   authMiddleware.verifyRefreshToken,
   async (req, res, next) => {
     try {
+      console.log("refresh");
       const { refreshToken } = req.cookies;
       const { email } = req.auth;
       const accessToken = await service.refreshToken({ email, refreshToken });
