@@ -39,22 +39,21 @@ model Notification {
 }
 
 model Card {
-  id                String     @id @default(uuid())
-  name              String
-  grade             String     @default("common")
-  genre             String     @default("unknwon")
-  price             Int        @default(0)
-  remainingQuantity Int        @default(0)
-  totalQuantity     Int        @default(0)
-  description       String     @default("")
-  imagePath         String
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
-  user              User       @relation(fields: [userId], references: [id])
-  userId            String
-  shop              Shop?
-  purchase          Purchase[]
-  exchange          Exchange[]
+  id          String     @id @default(uuid())
+  uniqueId    Int        @default(0)
+  name        String
+  grade       String     @default("common")
+  genre       String     @default("unknwon")
+  price       Int        @default(0)
+  description String     @default("")
+  imagePath   String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  shop        Shop?
+  purchase    Purchase[]
+  exchange    Exchange[]
 }
 
 model Shop {
@@ -86,6 +85,8 @@ model Exchange {
   cardId      String
   targetCard  String
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      String   @default("pending")
 }
 
 model PointLog {

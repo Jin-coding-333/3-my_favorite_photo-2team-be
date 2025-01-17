@@ -3,8 +3,16 @@ import cors from "cors";
 import router from "./routes/index.js";
 import { ORIGIN, PORT } from "../config/config.js";
 import cookieParser from "cookie-parser";
-
+import fs from "fs";
 const app = express();
+
+const uploadsDir = "uploads";
+
+// 폴더가 없으면 생성
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log("uploads 폴더가 생성되었습니다.");
+}
 
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());

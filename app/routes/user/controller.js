@@ -4,6 +4,7 @@ import { httpState } from "../../../config/config.js";
 import service from "./service.js";
 import multer from "multer";
 import cron from "node-cron";
+import { getTime } from "../../utils/date.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -85,11 +86,11 @@ user
     res.status(200).send(true);
   });
 
-/** 정각마다 이벤트 상태 변경 코드 */
+/** 분 마다 이벤트 상태 변경 코드 */
 cron.schedule("* * * * *", async () => {
-  // const date = new Date();
+  const date = new Date();
   try {
-    console.log("Event Reset");
+    console.log(`Current Time ${getTime()} :`, "Event Reset");
     await service.eventReset();
   } catch (err) {
     console.error("스케쥴 err", err);
