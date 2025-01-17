@@ -97,11 +97,47 @@ app.get("/cards/:shopId", async (req, res) => {
 
 //카드 등록하기
 app.post("/cards", async (req, res) => {
+  const { userId, uniqueId, totalQuantity, content } = req.body;
   try {
-    const ShopCard = await prisma.shop.create({
-      data: req.body,
+    //사용자 카드 중 uniqueId를 가지고 있는 카드 id 다 가져와
+    const userCards = await prisma.card.findMany({
+      where: {
+        userId: userId,
+        uniqueId: uniqueId,
+      },
+      select: {
+        id: true,
+      },
     });
-    res.status(httpState.created.number).json(ShopCard);
+
+    console.log(userCards);
+    console.log(userCards.length);
+    console.log(totalQuantity);
+
+    // 너 이거 이만큼 가지고 있니?
+    // 없으면 빠꾸
+    if (userCards.length < totalQuantity) {
+      return res.status(httpState.badRequest.number).json("카드가 모자랍니다");
+    }
+
+    // 있어? 그럼 등록 ㄱㄱ
+
+    // 등록할 카드 ID 선택 올리는 개수만큼 짤라!
+    const cardsToRegister = userCards.slice(0, totalQuantity);
+
+    // Shop에 등록할 카드 객체 만들기
+    const shopData = cardsToRegister.map((card) => ({
+      title,
+      content,
+      userId,
+      cardId: card.id, // 개별 카드 ID 연결
+    }));
+
+    // const ShopCard = await prisma.shop.create({
+    //   data: req.body,
+    // });
+    // res.status(httpState.created.number).json(ShopCard);
+    res.status(httpState.created.number).json("성공");
   } catch (err) {
     res
       .status(httpState.badRequest.number)
@@ -153,26 +189,85 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
     const { shopId } = req.params;
     const { buyerId, quantity } = req.body;
 
-    const shop = await prisma.study.findUnique({
+    //등록된 카드 찾기
+    const shopCardInfo = await prisma.shop.findUnique({
       // 카드 정보
-      where: { id: shopId },
+      where: { id: parseInt(shopId) },
       select: {
-        user: true,
-        card: true, // 현재 카드 소유자
+        card: {
+          select: {
+            id: true,
+            user: true, // 카드 소유자 정보 포함
+            price: true,
+            totalQuantity: true,
+            name: true,
+          },
+        },
       },
     });
-    // 없으면 에러
-    if (!shop) {
-      return res.status(httpState.success.number).json("해당 카드는 없습니다");
+
+    //원래 소유자 찾기
+    const cardOwner = shopCardInfo.card.user;
+    console.log({ owner: cardOwner });
+
+    // 카드 소유자가 있니
+    if (!cardOwner) {
+      return res
+        .status(httpState.notFound.number)
+        .json("카드 소유자를 찾을 수 없습니다");
     }
+
+    // 구매자 찾기
+    const buyer = await prisma.user.findUnique({
+      where: { id: buyerId },
+    });
+    console.log({ buyer: buyer });
+
+    // 구매자가 있니
+    if (!buyer) {
+      return res
+        .status(httpState.notFound.number)
+        .json("구매자를 찾을 수 없습니다");
+    }
+
     // shop에 있는 card
-    const card = shop.card;
+    const card = shopCardInfo.card;
     console.log({ card: card });
 
-    const purchasedCard = await prisma.shop.create({
-      data: req.body,
+    // 카드 모자라
+    if (card.totalQuantity < quantity) {
+      return res.status(httpState.accepted.number).json("카드가 모자랍니다");
+    }
+
+    //카드 가격
+    const totalPrice = card.price * quantity;
+
+    // point 없으면 돌아가
+    if (buyer.point < totalPrice) {
+      return res.status(httpState.success.number).json("포인트가 부족합니다");
+    }
+    // 살 수 있어? 그럼 진행
+    // 구매내역 등록
+    const purchasedCard = await prisma.purchase.create({
+      data: {
+        userId: cardOwner.id,
+        buyerId: buyer.id,
+        cardId: card.id,
+      },
     });
-    res.status(httpState.created.number).json(ShopCard);
+    console.log({ purchaseRecode: purchasedCard });
+
+    //주인 바꿔
+    await prisma.user.update;
+
+    await prisma.card.create({
+      where: { id: card.id },
+      data: {
+        userId: buyerId,
+      },
+    });
+
+    res.status(httpState.created.number).json(purchasedCard);
   } catch (err) {
     res
       .status(httpState.badRequest.number)
