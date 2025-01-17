@@ -73,7 +73,12 @@ user
     const point = Math.floor(Math.random() * 9) + 1;
     const update = await service.updateUser({
       email,
-      data: { event: true, point },
+      data: {
+        event: true,
+        point: {
+          increment: point,
+        },
+      },
     });
     if (!update) return res.status(401).send(false);
 
@@ -81,13 +86,13 @@ user
   });
 
 /** 정각마다 이벤트 상태 변경 코드 */
-cron.schedule("0 * * * *", async () => {
+cron.schedule("* * * * *", async () => {
   // const date = new Date();
   try {
     console.log("Event Reset");
     await service.eventReset();
   } catch (err) {
-    console.error("스케쥴 err~~~~~~", err);
+    console.error("스케쥴 err", err);
   }
 });
 
