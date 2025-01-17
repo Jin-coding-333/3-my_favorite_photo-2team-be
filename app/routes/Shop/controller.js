@@ -147,7 +147,7 @@ app.delete("/cards/:shopId", async (req, res) => {
   }
 });
 
-//카드 구매 (미완)
+//카드 구매 (진행중)
 app.post("/cards/:shopId/purchase", async (req, res) => {
   try {
     const { shopId } = req.params;
