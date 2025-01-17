@@ -4,7 +4,7 @@ import { JWT_SECRET } from "../../config/config.js";
 const verifyRefreshToken = expressjwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
-  getToken: (req) => req.cookies.refreshToken ,
+  getToken: (req) => req.cookies.refreshToken,
 });
 
 const verifyAccessToken = expressjwt({
@@ -18,6 +18,9 @@ const refreshTokenChk = async (req, res, next) => {
   if (refreshToken) return next();
   console.log("token 없음");
   res.send("");
+};
+const accessTokenChk = async (req, res, next) => {
+  console.log(req.headers);
 };
 
 const authMiddleware = {
