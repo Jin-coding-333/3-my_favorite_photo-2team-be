@@ -147,7 +147,7 @@ app.delete("/cards/:shopId", async (req, res) => {
   }
 });
 
-//카드 구매
+//카드 구매 (미완)
 app.post("/cards/:shopId/purchase", async (req, res) => {
   try {
     const { shopId } = req.params;
@@ -163,9 +163,7 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
     });
     // 없으면 에러
     if (!shop) {
-      return res
-        .status(httpState.notFound.number)
-        .json({ error: "Shop or card not found" });
+      return res.status(httpState.success.number).json("해당 카드는 없습니다");
     }
     // shop에 있는 card
     const card = shop.card;
