@@ -11,7 +11,8 @@
     "prettier": "prettier --write .",
     "prettier-check": "prettier --check .",
     "prisma": "npx prisma migrate dev",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "start": "node ./app/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -33,5 +34,8 @@
   },
   "devDependencies": {
     "prettier": "^3.4.2"
+  },
+  "engines": {
+    "node": "20.6.0"
   }
 }

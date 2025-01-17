@@ -56,6 +56,8 @@ model Shop {
   content   String
   userId    String
   cardId    String   @unique
+  totalQuantity     Int      
+  remainingQuantity Int    
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   card      Card     @relation(fields: [cardId], references: [id])
