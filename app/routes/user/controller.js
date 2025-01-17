@@ -70,9 +70,10 @@ user
   })
   .post("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;
+    const point = Math.floor(Math.random() * 9) + 1;
     const update = await service.updateUser({
       email,
-      data: { event: true },
+      data: { event: true, point },
     });
     if (!update) return res.status(401).send(false);
 
