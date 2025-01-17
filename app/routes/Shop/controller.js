@@ -97,11 +97,47 @@ app.get("/cards/:shopId", async (req, res) => {
 
 //카드 등록하기
 app.post("/cards", async (req, res) => {
+  const { userId, uniqueId, totalQuantity, content } = req.body;
   try {
-    const ShopCard = await prisma.shop.create({
-      data: req.body,
+    //사용자 카드 중 uniqueId를 가지고 있는 카드 id 다 가져와
+    const userCards = await prisma.card.findMany({
+      where: {
+        userId: userId,
+        uniqueId: uniqueId,
+      },
+      select: {
+        id: true,
+      },
     });
-    res.status(httpState.created.number).json(ShopCard);
+
+    console.log(userCards);
+    console.log(userCards.length);
+    console.log(totalQuantity);
+
+    // 너 이거 이만큼 가지고 있니?
+    // 없으면 빠꾸
+    if (userCards.length < totalQuantity) {
+      return res.status(httpState.badRequest.number).json("카드가 모자랍니다");
+    }
+
+    // 있어? 그럼 등록 ㄱㄱ
+
+    // 등록할 카드 ID 선택 올리는 개수만큼 짤라!
+    const cardsToRegister = userCards.slice(0, totalQuantity);
+
+    // Shop에 등록할 카드 객체 만들기
+    const shopData = cardsToRegister.map((card) => ({
+      title,
+      content,
+      userId,
+      cardId: card.id, // 개별 카드 ID 연결
+    }));
+
+    // const ShopCard = await prisma.shop.create({
+    //   data: req.body,
+    // });
+    // res.status(httpState.created.number).json(ShopCard);
+    res.status(httpState.created.number).json("성공");
   } catch (err) {
     res
       .status(httpState.badRequest.number)
