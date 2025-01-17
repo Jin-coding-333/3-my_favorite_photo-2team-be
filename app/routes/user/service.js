@@ -1,17 +1,37 @@
 import cardRepo from "../../repositories/cardRepository.js";
+import userRepo from "../../repositories/userRepository.js";
+
+async function getUser({ email }) {
+  const findUser = await userRepo.findByEmail(email);
+  return userRepo.userDataFilter(findUser);
+}
+
+const updateUser = async ({ email, data }) => {
+  const update = await userRepo.updateUser({ email, data });
+  if (!!update) return true;
+  return false;
+};
 
 const create = async (body) => {
-  const { name, userId, grade, genre, price, count, description, imagePath } =
-    body;
+  const {
+    name,
+    userId,
+    grade,
+    genre,
+    price,
+    totalQuantity,
+    description,
+    imagePath,
+  } = body;
 
-  // img upload 로직 넣기
   return await cardRepo.createCard({
     name,
     userId,
     grade,
     genre,
     price: parseInt(price),
-    count: parseInt(count),
+    remainingQuantity: parseInt(totalQuantity),
+    totalQuantity: parseInt(totalQuantity),
     description,
     imagePath,
   });
@@ -22,15 +42,28 @@ const getCards = async (userId) => {
   return cards;
 };
 
-const getMarketCards = async (userId) => {
-  const marketCards = await cardRepo.findMarketCards(userId);
-  return marketCards;
+const getShopCards = async (userId) => {
+  const shopCards = await cardRepo.findShopCards(userId);
+  return shopCards;
+};
+
+const getExchangeCards = async (userId) => {
+  const cards = await cardRepo.findExchangeCards(userId);
+  return cards;
+};
+
+const eventReset = async () => {
+  await userRepo.eventReset();
 };
 
 const service = {
   create,
   getCards,
-  getMarketCards,
+  getShopCards,
+  getExchangeCards,
+  eventReset,
+  getUser,
+  updateUser,
 };
 
 export default service;

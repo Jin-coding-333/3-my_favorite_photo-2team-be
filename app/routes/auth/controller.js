@@ -14,21 +14,31 @@ auth.get("/user", authMiddleware.verifyAccessToken, async (req, res) => {
   }
 });
 
-auth.post("/signup", (req, res) => {
+auth.post("/signup", async (req, res, next) => {
   const { email, password, nickName } = req.body;
-  try {
-    service.signUp({
-      email,
-      password,
-      nickName,
-    });
-    res.status(httpState.created.number).send("user created");
-  } catch (err) {
-    console.log(err);
+  const signup = await service.signUp({
+    email,
+    password,
+    nickName,
+  });
+  let msg = "";
+  if (signup && signup.code === "P2002") {
+    switch (signup.target) {
+      case "email":
+        msg = "이메일 중복입니다.";
+        break;
+      case "nickName":
+        msg = "닉네임 중복입니다.";
+        break;
+    }
+    res.status(401).json({ success: false, msg });
+    return;
   }
+  msg = "회원가입을 축하드립니다.";
+  res.status(httpState.created.number).json({ success: true, msg });
 });
 
-auth.post("/login", async (req, res) => {
+auth.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await service.login({ email, password });
@@ -42,7 +52,7 @@ auth.post("/login", async (req, res) => {
       })
       .json({ success: !!accessToken, accessToken });
   } catch (err) {
-    console.log(err);
+    next(err);
     res.status(httpState.unauthorized.number).json({
       success: false,
     });
@@ -51,6 +61,7 @@ auth.post("/login", async (req, res) => {
 
 auth.post(
   "/refresh",
+  authMiddleware.refreshTokenChk,
   authMiddleware.verifyRefreshToken,
   async (req, res, next) => {
     try {
@@ -59,8 +70,8 @@ auth.post(
       const accessToken = await service.refreshToken({ email, refreshToken });
       res.status(httpState.success.number).json({ success: true, accessToken });
     } catch (err) {
-      console.error("refresh", err);
       next(err);
+      res.status(httpState.badRequest.number).json({ success: false });
     }
   }
 );

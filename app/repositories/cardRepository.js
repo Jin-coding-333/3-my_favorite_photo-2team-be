@@ -8,6 +8,8 @@ async function findManyCards(userId) {
         userId,
       },
     });
+    // console.log(cards, userId);
+
     return cards;
   } catch (err) {
     console.error(msg("findManycards"), err);
@@ -24,7 +26,7 @@ async function createCard(body) {
   }
 }
 
-async function findMarketCards(userId) {
+async function findShopCards(userId) {
   try {
     return await prisma.shop.findMany({
       where: {
@@ -32,12 +34,28 @@ async function findMarketCards(userId) {
       },
     });
   } catch (err) {
-    console.error(msg("findMarketCards"), err);
+    console.error(msg("findShopCards"), err);
+  }
+}
+
+async function findExchangeCards(requesterId) {
+  try {
+    const cards = await prisma.exchange.findMany({
+      where: {
+        requesterId,
+      },
+    });
+    return cards;
+  } catch (err) {
+    return {
+      code: err.code,
+    };
   }
 }
 const cardRepo = {
   findManyCards,
   createCard,
-  findMarketCards,
+  findShopCards,
+  findExchangeCards,
 };
 export default cardRepo;
