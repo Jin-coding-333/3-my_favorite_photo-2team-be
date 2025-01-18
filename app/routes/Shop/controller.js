@@ -97,16 +97,38 @@ app.get("/cards/:shopId", async (req, res) => {
 
 //카드 등록하기
 app.post("/cards", async (req, res) => {
-  const { userId, uniqueId, totalQuantity, content } = req.body;
+  const {
+    userId,
+    cardId,
+    totalQuantity,
+    exchangeGrade,
+    exchangeGenre,
+    content,
+  } = req.body;
   try {
+    //cardId로 먼저 uniqueId 찾아
+    const card = await prisma.card.findFirst({
+      where: {
+        id: cardId,
+      },
+      select: {
+        uniqueId: true,
+      },
+    });
+    console.log(card.uniqueId);
+    if (!card) {
+      return res.status(404).json({ error: "카드를 찾을 수 없습니다." });
+    }
+
     //사용자 카드 중 uniqueId를 가지고 있는 카드 id 다 가져와
     const userCards = await prisma.card.findMany({
       where: {
         userId: userId,
-        uniqueId: uniqueId,
+        uniqueId: card.uniqueId,
       },
       select: {
         id: true,
+        name: true,
       },
     });
 
@@ -120,24 +142,44 @@ app.post("/cards", async (req, res) => {
       return res.status(httpState.badRequest.number).json("카드가 모자랍니다");
     }
 
-    // 있어? 그럼 등록 ㄱㄱ
+    // 너 전에 등록한 적 있니?
+    // shop에서 등록된 카드들의 uniqueId를 확인
+    const existingShop = await prisma.shop.findFirst({
+      where: {
+        userId: userId,
+      },
+      include: {
+        card: {
+          select: {
+            uniqueId: true, // 카드의 uniqueId 가져오기
+          },
+        },
+      },
+    });
 
-    // 등록할 카드 ID 선택 올리는 개수만큼 짤라!
-    const cardsToRegister = userCards.slice(0, totalQuantity);
+    // 등록된 카드가 있고 그 카드의 uniqueId와 판매자가 등록하려는 카드의 uniqueId가 일치하면
+    if (existingShop && existingShop.card.uniqueId === card.uniqueId) {
+      return res
+        .status(httpState.badRequest.number)
+        .json("이미 등록된 카드입니다.");
+    }
 
-    // Shop에 등록할 카드 객체 만들기
-    const shopData = cardsToRegister.map((card) => ({
-      title,
-      content,
-      userId,
-      cardId: card.id, // 개별 카드 ID 연결
-    }));
+    // 없어? 그럼 새로 등록 해!
+    // title은 카드 이름이겠지?
 
-    // const ShopCard = await prisma.shop.create({
-    //   data: req.body,
-    // });
-    // res.status(httpState.created.number).json(ShopCard);
-    res.status(httpState.created.number).json("성공");
+    const shopCard = await prisma.shop.create({
+      data: {
+        title: userCards[0].name,
+        content,
+        userId,
+        cardId,
+        totalQuantity,
+        remainingQuantity: totalQuantity,
+      },
+    });
+    res.status(httpState.created.number).json({ "등록된 데이터": shopCard });
+
+    // res.status(httpState.created.number).json("성공");
   } catch (err) {
     res
       .status(httpState.badRequest.number)
@@ -150,10 +192,44 @@ app.post("/cards", async (req, res) => {
 app.put("/cards/:shopId", async (req, res) => {
   try {
     const { shopId } = req.params;
+    const { totalQuantity, content } = req.body;
 
-    const updatedShopCard = await prisma.shop.update({
-      data: req.body,
+    // 기존 shopCard 정보 가져오기
+    const existingShopCard = await prisma.shop.findUnique({
       where: { id: parseInt(shopId) },
+    });
+
+    if (!existingShopCard) {
+      return res
+        .status(httpState.badRequest.number)
+        .json({ error: "카드를 찾을 수 없습니다." });
+    }
+
+    const soldQuantity =
+      existingShopCard.totalQuantity - existingShopCard.remainingQuantity;
+
+    if (soldQuantity > totalQuantity) {
+      return res.status(400).json({
+        error: "총 수량은 이미 팔린 수량보다 많아야 합니다.",
+      });
+    }
+    let newRemainingQuantity;
+    if (totalQuantity < existingShopCard.totalQuantity) {
+      // totalQuantity가 감소하는 경우: remainingQuantity는 totalQuantity로 맞춤
+      newRemainingQuantity = totalQuantity;
+    } else {
+      // totalQuantity가 증가하는 경우: 기존 remainingQuantity + 증가한 수량
+      const quantityIncrease = totalQuantity - existingShopCard.totalQuantity;
+      newRemainingQuantity =
+        existingShopCard.remainingQuantity + quantityIncrease;
+    }
+    const updatedShopCard = await prisma.shop.update({
+      where: { id: parseInt(shopId) },
+      data: {
+        totalQuantity, // totalQuantity 업데이트
+        remainingQuantity: newRemainingQuantity, // 팔린 수량 차감 후 remainingQuantity 업데이트
+        content, // content 수정
+      },
     });
     res.status(httpState.success.number).json({ 수정완료: updatedShopCard });
   } catch (err) {
