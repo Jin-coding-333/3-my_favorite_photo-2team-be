@@ -5,14 +5,21 @@ import authMiddleware from "../../middlewares/auth.js";
 
 const auth = express.Router();
 
-auth.get("/user", authMiddleware.verifyAccessToken, async (req, res) => {
-  try {
-    const user = await service.getUser({ email: req.user.email });
-    res.status(httpState.success.number).json({ user });
-  } catch (err) {
-    console.error(err);
+auth.get(
+  "/user",
+  authMiddleware.accessTokenChk,
+  authMiddleware.verifyAccessToken,
+  async (req, res) => {
+    try {
+      console.log("getUser");
+      const user = await service.getUser({ email: req.user.email });
+      console.log(user);
+      res.status(httpState.success.number).json({ user });
+    } catch (err) {
+      console.error(err);
+    }
   }
-});
+);
 
 auth.post("/signup", async (req, res, next) => {
   const { email, password, nickName } = req.body;
@@ -65,6 +72,7 @@ auth.post(
   authMiddleware.verifyRefreshToken,
   async (req, res, next) => {
     try {
+      console.log("refresh");
       const { refreshToken } = req.cookies;
       const { email } = req.auth;
       const accessToken = await service.refreshToken({ email, refreshToken });
@@ -76,11 +84,17 @@ auth.post(
   }
 );
 
-auth.get("/logout", (req, res) => {
-  console.log("logout", req.cookies);
-  req.user = null;
-  res.clearCookie("refreshToken");
-  res.status(httpState.success.number).send({ success: true });
-});
+auth.get(
+  "/logout",
+  authMiddleware.accessTokenChk,
+  authMiddleware.verifyAccessToken,
+  async (req, res) => {
+    const { email } = req.user;
+    await service.logout({ email });
+    req.user = null;
+    res.clearCookie("refreshToken");
+    res.status(httpState.success.number).send({ success: true });
+  }
+);
 
 export default auth;
