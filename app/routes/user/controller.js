@@ -19,13 +19,18 @@ const upload = multer({ storage });
 const user = express.Router();
 
 user
-  .get("/my-cards", authMiddleware.verifyAccessToken, async (req, res) => {
-    const { userId } = req.user;
-    const cards = await service.getCards(userId);
-    res.status(httpState.success.number).json({
-      data: cards,
-    });
-  })
+  .get(
+    "/my-cards",
+    authMiddleware.accessTokenChk,
+    authMiddleware.verifyAccessToken,
+    async (req, res) => {
+      const { userId } = req.user;
+      const cards = await service.getCards(userId);
+      res.status(httpState.success.number).json({
+        data: cards,
+      });
+    }
+  )
   .post(
     "/my-cards",
     authMiddleware.verifyAccessToken,
@@ -67,35 +72,37 @@ user
   .get("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;
     const user = await service.getUser({ email });
+    if (!!!user) return res.status(401).send(null);
     res.status(201).send(user.event);
   })
   .post("/point", authMiddleware.verifyAccessToken, async (req, res) => {
-    const { email } = req.user;
-    const point = Math.floor(Math.random() * 9) + 1;
-    const update = await service.updateUser({
-      email,
-      data: {
-        event: true,
-        point: {
-          increment: point,
-        },
-      },
-    });
-    if (!update) return res.status(401).send(false);
+    // const { email } = req.user;
+    // const point = Math.floor(Math.random() * 9) + 1;
+    // const now = new Date();
+    // const update = await service.updateUser({
+    //   email,
+    //   data: {
+    //     event: now,
+    //     point: {
+    //       increment: point,
+    //     },
+    //   },
+    // });
+    // if (!update) return res.status(401).send(false);
 
     res.status(200).send(true);
   });
 
 /** 분 마다 이벤트 상태 변경 코드 */
-cron.schedule("* * * * *", async () => {
-  const date = new Date();
-  try {
-    console.log(`Current Time ${getTime()} :`, "Event Reset");
-    await service.eventReset();
-  } catch (err) {
-    console.error("스케쥴 err", err);
-  }
-});
+// cron.schedule("* * * * *", async () => {
+//   const date = new Date();
+//   try {
+//     console.log(`Current Time ${getTime()} :`, "Event Reset");
+//     await service.eventReset();
+//   } catch (err) {
+//     console.error("스케쥴 err", err);
+//   }
+// });
 
 // user.get("/profile", async (req, res) => {
 //   try {
