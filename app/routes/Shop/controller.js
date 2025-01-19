@@ -270,7 +270,7 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
     });
     console.log({ shopInfo: shopInfo });
 
-    // 카드 등록한 유저 id
+    //  판매자  id
     const shopOwnerId = shopInfo.userId;
 
     // 구매자 찾기
@@ -314,62 +314,55 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
     console.log({ cardList: cardList, carListLength: cardList.length });
 
     const selectedCards = cardList.slice(0, quantity);
+    console.log(selectedCards);
     const selectedCardIds = selectedCards.map((card) => card.id);
-
+    console.log(selectedCardIds);
     // 살 수 있어? 그럼 진행
 
     const purchase = await prisma.$transaction(async (prisma) => {
       // 구매 기록 생성
       const newPurchase = await prisma.purchase.create({
         data: {
-          userId: shopCard.userId, // 판매자 ID
-          buyerId: userId, // 구매자 ID
-          cardId: shopCard.cardId,
+          userId: shopOwnerId, // 판매자 ID
+          buyerId: buyerId, // 구매자 ID
+          card: {
+            connect: selectedCardIds.map((cardId) => ({ id: cardId })), //객체로 전달
+          },
         },
       });
 
-      // 판매자 포인트 증가
+      // 판매자 돈 받기
       await prisma.user.update({
-        where: { id: shopCard.userId },
+        where: { id: shopOwnerId },
         data: { point: { increment: totalPrice } },
       });
 
-      // 구매자 포인트 차감
+      // 구매자 돈 내기
       await prisma.user.update({
-        where: { id: userId },
+        where: { id: buyerId },
         data: { point: { decrement: totalPrice } },
       });
 
       // 재고 감소
       await prisma.shop.update({
-        where: { id: shopId },
+        where: { id: parseInt(shopId) },
         data: { remainingQuantity: { decrement: quantity } },
+      });
+
+      // 구매한 카드들의 userId를 구매자(구매자 ID)로 업데이트
+      await prisma.card.updateMany({
+        where: {
+          id: { in: selectedCardIds },
+        },
+        data: {
+          userId: buyerId, // 구매자 ID로 userId 변경
+        },
       });
 
       return newPurchase;
     });
-    // // 구매내역 등록
-    // const purchasedCard = await prisma.purchase.create({
-    //   data: {
-    //     userId: cardOwner.id,
-    //     buyerId: buyer.id,
-    //     cardId: card.id,
-    //   },
-    // });
-    // console.log({ purchaseRecode: purchasedCard });
 
-    // //주인 바꿔
-    // await prisma.card.update({
-    //   where: {
-    //     id : cardId
-    //   },
-    //   data: {
-    //     userId : buyerId
-    //   }
-    // });
-
-    // res.status(httpState.created.number).json(purchasedCard);
-    res.status(httpState.success.number).json("성공");
+    res.status(httpState.created.number).json(purchase);
   } catch (err) {
     res
       .status(httpState.badRequest.number)
