@@ -46,7 +46,7 @@ model Card {
   uniqueId    String     @default("")
   user        User       @relation(fields: [userId], references: [id])
   exchange    Exchange[]
-  purchase    Purchase[]
+  purchase    Purchase[] @relation("PurchaseCards")
   shop        Shop?
 }
 
@@ -69,7 +69,7 @@ model Purchase {
   userId    String
   buyerId   String
   createdAt DateTime @default(now())
-  card      Card[]   
+  card      Card[]   @relation("PurchaseCards")
   user      User     @relation(fields: [userId], references: [id])
 }
 
