@@ -314,8 +314,9 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
     console.log({ cardList: cardList, carListLength: cardList.length });
 
     const selectedCards = cardList.slice(0, quantity);
+    console.log(selectedCards);
     const selectedCardIds = selectedCards.map((card) => card.id);
-
+    console.log(selectedCardIds);
     // 살 수 있어? 그럼 진행
 
     const purchase = await prisma.$transaction(async (prisma) => {
@@ -325,26 +326,26 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
           userId: shopOwnerId, // 판매자 ID
           buyerId: buyerId, // 구매자 ID
           card: {
-            connect: selectedCardIds,
+            connect: selectedCardIds.map((cardId) => ({ id: cardId })), //객체로 전달
           },
         },
       });
 
       // 판매자 돈 받기
       await prisma.user.update({
-        where: { id: shopCard.userId },
+        where: { id: shopOwnerId },
         data: { point: { increment: totalPrice } },
       });
 
       // 구매자 돈 내기
       await prisma.user.update({
-        where: { id: userId },
+        where: { id: buyerId },
         data: { point: { decrement: totalPrice } },
       });
 
       // 재고 감소
       await prisma.shop.update({
-        where: { id: shopId },
+        where: { id: parseInt(shopId) },
         data: { remainingQuantity: { decrement: quantity } },
       });
 
