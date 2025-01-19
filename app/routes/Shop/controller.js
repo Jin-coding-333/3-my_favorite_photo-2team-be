@@ -33,15 +33,11 @@ app.get("/cards", async (req, res) => {
 
         status === "onSale"
           ? {
-              card: {
-                remainingQuantity: { gt: 0 }, // remainingQuantity > 0
-              },
+              remainingQuantity: { gt: 0 }, // remainingQuantity > 0
             }
           : status === "soldOut"
             ? {
-                card: {
-                  remainingQuantity: { equals: 0 }, // remainingQuantity = 0
-                },
+                remainingQuantity: { equals: 0 }, // remainingQuantity = 0
               }
             : {}, // status가 없으면 필터링 없음
       ],
@@ -97,14 +93,7 @@ app.get("/cards/:shopId", async (req, res) => {
 
 //카드 등록하기
 app.post("/cards", async (req, res) => {
-  const {
-    userId,
-    cardId,
-    totalQuantity,
-    exchangeGrade,
-    exchangeGenre,
-    content,
-  } = req.body;
+  const { userId, cardId, totalQuantity, content } = req.body;
   try {
     //cardId로 먼저 uniqueId 찾아
     const card = await prisma.card.findFirst({
@@ -266,52 +255,44 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
     const { buyerId, quantity } = req.body;
 
     //등록된 카드 찾기
-    const shopCardInfo = await prisma.shop.findUnique({
+    const shopInfo = await prisma.shop.findUnique({
       // 카드 정보
       where: { id: parseInt(shopId) },
-      select: {
+      include: {
         card: {
           select: {
-            id: true,
+            uniqueId: true,
             user: true, // 카드 소유자 정보 포함
             price: true,
-            totalQuantity: true,
-            name: true,
           },
         },
       },
     });
+    console.log({ shopInfo: shopInfo });
 
-    //원래 소유자 찾기
-    const cardOwner = shopCardInfo.card.user;
-    console.log({ owner: cardOwner });
-
-    // 카드 소유자가 있니
-    if (!cardOwner) {
-      return res
-        .status(httpState.notFound.number)
-        .json("카드 소유자를 찾을 수 없습니다");
-    }
+    // 카드 등록한 유저 id
+    const shopOwnerId = shopInfo.userId;
 
     // 구매자 찾기
     const buyer = await prisma.user.findUnique({
       where: { id: buyerId },
     });
-    console.log({ buyer: buyer });
 
-    // 구매자가 있니
+    // 구매자가 없으면 빠꾸
     if (!buyer) {
       return res
         .status(httpState.notFound.number)
         .json("구매자를 찾을 수 없습니다");
     }
 
+    console.log({ buyer: buyer });
+
     // shop에 있는 card
-    const card = shopCardInfo.card;
+    const card = shopInfo.card;
     console.log({ card: card });
 
     // 카드 모자라
-    if (card.totalQuantity < quantity) {
+    if (shopInfo.remainingQuantity < quantity) {
       return res.status(httpState.accepted.number).json("카드가 모자랍니다");
     }
 
@@ -322,28 +303,73 @@ app.post("/cards/:shopId/purchase", async (req, res) => {
     if (buyer.point < totalPrice) {
       return res.status(httpState.success.number).json("포인트가 부족합니다");
     }
+
+    // 판매 가능한 카드 리스트
+    const cardList = await prisma.card.findMany({
+      where: {
+        userId: shopOwnerId,
+        uniqueId: card.uniqueId,
+      },
+    });
+    console.log({ cardList: cardList, carListLength: cardList.length });
+
+    const selectedCards = cardList.slice(0, quantity);
+    const selectedCardIds = selectedCards.map((card) => card.id);
+
     // 살 수 있어? 그럼 진행
-    // 구매내역 등록
-    const purchasedCard = await prisma.purchase.create({
-      data: {
-        userId: cardOwner.id,
-        buyerId: buyer.id,
-        cardId: card.id,
-      },
+
+    const purchase = await prisma.$transaction(async (prisma) => {
+      // 구매 기록 생성
+      const newPurchase = await prisma.purchase.create({
+        data: {
+          userId: shopCard.userId, // 판매자 ID
+          buyerId: userId, // 구매자 ID
+          cardId: shopCard.cardId,
+        },
+      });
+
+      // 판매자 포인트 증가
+      await prisma.user.update({
+        where: { id: shopCard.userId },
+        data: { point: { increment: totalPrice } },
+      });
+
+      // 구매자 포인트 차감
+      await prisma.user.update({
+        where: { id: userId },
+        data: { point: { decrement: totalPrice } },
+      });
+
+      // 재고 감소
+      await prisma.shop.update({
+        where: { id: shopId },
+        data: { remainingQuantity: { decrement: quantity } },
+      });
+
+      return newPurchase;
     });
-    console.log({ purchaseRecode: purchasedCard });
+    // // 구매내역 등록
+    // const purchasedCard = await prisma.purchase.create({
+    //   data: {
+    //     userId: cardOwner.id,
+    //     buyerId: buyer.id,
+    //     cardId: card.id,
+    //   },
+    // });
+    // console.log({ purchaseRecode: purchasedCard });
 
-    //주인 바꿔
-    await prisma.user.update;
+    // //주인 바꿔
+    // await prisma.card.update({
+    //   where: {
+    //     id : cardId
+    //   },
+    //   data: {
+    //     userId : buyerId
+    //   }
+    // });
 
-    await prisma.card.create({
-      where: { id: card.id },
-      data: {
-        userId: buyerId,
-      },
-    });
-
-    res.status(httpState.created.number).json(purchasedCard);
+    // res.status(httpState.created.number).json(purchasedCard);
+    res.status(httpState.success.number).json("성공");
   } catch (err) {
     res
       .status(httpState.badRequest.number)

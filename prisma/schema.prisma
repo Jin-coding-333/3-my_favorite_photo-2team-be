@@ -68,9 +68,8 @@ model Purchase {
   id        Int      @id @default(autoincrement())
   userId    String
   buyerId   String
-  cardId    String
   createdAt DateTime @default(now())
-  card      Card     @relation(fields: [cardId], references: [id])
+  card      Card[]   
   user      User     @relation(fields: [userId], references: [id])
 }
 
