@@ -33,7 +33,7 @@ router.post(
   }
 );
 
-// 포토카드 교환 제안 승인/거절
+// 포토카드 교환 제안 승인과 거절
 router.post(
   "/:exchangeId/exchange/:action",
   authMiddleware.verifyAccessToken,
