@@ -1,12 +1,12 @@
 import express from "express";
 import authMiddleware from "../../middlewares/auth.js";
 import service from "./service.js";
-import { httpState } from "../../config.js";
+import { httpState } from "../../../config/config.js";
 
-const router = express.Router();
+const exchange = express.Router();
 
 // 포토카드 교환 제안 생성
-router.post(
+exchange.post(
   "/cards/:shopId/exchange",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
@@ -34,7 +34,7 @@ router.post(
 );
 
 // 포토카드 교환 제안 승인과 거절
-router.post(
+exchange.post(
   "/cards/:exchangeId/exchange/:action",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
@@ -60,7 +60,7 @@ router.post(
 );
 
 // 포토카드 교환 제안 취소
-router.delete(
+exchange.delete(
   "/cards/:exchangeId/exchange",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
@@ -81,7 +81,7 @@ router.delete(
 );
 
 // 알림 조회
-router.get(
+exchange.get(
   "/notifications",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
@@ -104,7 +104,7 @@ router.get(
 );
 
 // 알림 읽음 처리 (isRead 필드 업데이트)
-router.patch(
+exchange.patch(
   "/notifications/:notificationId",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
@@ -127,4 +127,4 @@ router.patch(
   }
 );
 
-export default router;
+export default exchange;

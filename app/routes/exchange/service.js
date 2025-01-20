@@ -1,5 +1,4 @@
-import prisma from "../../prisma/client.js";
-import { httpState } from "../../config.js";
+import { httpState } from "../../../config/config.js";
 
 const service = {
   // 교환 생성
