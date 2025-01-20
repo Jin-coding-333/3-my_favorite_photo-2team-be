@@ -75,7 +75,7 @@ app.get("/cards/:shopId", async (req, res) => {
     const { shopId } = req.params;
     const card = await prisma.shop.findUnique({
       where: { id: parseInt(shopId) },
-      include: { card: true },
+      include: { card: true, user: true },
     });
     if (!card) {
       return res.status(httpState.success.number).json("해당 카드는 없습니다");
