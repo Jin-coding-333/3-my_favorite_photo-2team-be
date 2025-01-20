@@ -74,19 +74,21 @@ user
     res.status(201).send(user.event);
   })
   .post("/point", authMiddleware.verifyAccessToken, async (req, res) => {
-    // const { email } = req.user;
-    // const point = Math.floor(Math.random() * 9) + 1;
-    // const now = new Date();
-    // const update = await service.updateUser({
-    //   email,
-    //   data: {
-    //     event: now,
-    //     point: {
-    //       increment: point,
-    //     },
-    //   },
-    // });
-    // if (!update) return res.status(401).send(false);
+    const { email } = req.user;
+    const point = Math.floor(Math.random() * 9) + 1;
+    const now = new Date();
+    const update = await service.updateUser({
+      email,
+      data: {
+        event: now,
+        point: {
+          increment: point,
+        },
+      },
+    });
+    console.log(update);
+
+    if (!update) return res.status(401).send(false);
 
     res.status(200).send(true);
   });
