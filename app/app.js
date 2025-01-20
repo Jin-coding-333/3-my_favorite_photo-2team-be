@@ -17,9 +17,10 @@ if (!fs.existsSync(uploadsDir)) {
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 app.use(
   cors({
-    origin: ORIGIN || "*",
+    origin: ["*"],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS"],
   })
