@@ -23,7 +23,11 @@ const create = async (body) => {
     description,
     imagePath,
   } = body;
-  const uniqueId = imagePath.split("/uploads/")[1].split(".")[0];
+
+  let uniqueId = imagePath.split("/uploads")[1].split(".")[0];
+  uniqueId = uniqueId.split("\\").join("");
+  uniqueId = uniqueId.split("/").join("");
+  console.log(uniqueId);
   for (let i = 0; i < parseInt(totalQuantity); i++) {
     await cardRepo.createCard({
       uniqueId,

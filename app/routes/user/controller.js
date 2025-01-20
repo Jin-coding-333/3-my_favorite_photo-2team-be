@@ -3,8 +3,6 @@ import authMiddleware from "../../middlewares/auth.js";
 import { httpState } from "../../../config/config.js";
 import service from "./service.js";
 import multer from "multer";
-import cron from "node-cron";
-import { getTime } from "../../utils/date.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
