@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ORIGIN || "*",
+    origin: ["http://localhost:3000", "https://my-favorite-photo.onrender.com"],
     credentials: true,
   })
 );
