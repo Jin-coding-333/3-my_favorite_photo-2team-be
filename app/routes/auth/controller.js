@@ -45,6 +45,7 @@ auth.post("/signup", async (req, res, next) => {
 
 auth.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
+  console.log("login");
   try {
     const user = await service.login({ email, password });
     const accessToken = await service.createToken(user);
