@@ -53,7 +53,10 @@ model Card {
 model Shop {
   id                Int      @id @default(autoincrement())
   title             String
-  content           String
+  grade             String
+  genre             String
+  message           String
+  price             Int
   userId            String
   cardId            String   @unique
   createdAt         DateTime @default(now())

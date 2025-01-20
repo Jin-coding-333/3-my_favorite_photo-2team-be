@@ -94,7 +94,8 @@ app.get("/cards/:shopId", async (req, res) => {
 
 //카드 등록하기
 app.post("/cards", async (req, res) => {
-  const { userId, cardId, totalQuantity, content } = req.body;
+  const { userId, cardId, totalQuantity, price, grade, genre, message } =
+    req.body;
   try {
     //cardId로 먼저 uniqueId 찾아
     const card = await prisma.card.findFirst({
@@ -160,7 +161,10 @@ app.post("/cards", async (req, res) => {
     const shopCard = await prisma.shop.create({
       data: {
         title: userCards[0].name,
-        content,
+        grade,
+        genre,
+        message,
+        price,
         userId,
         cardId,
         totalQuantity,
