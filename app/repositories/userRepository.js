@@ -57,22 +57,12 @@ function userDataFilter(user) {
   }
 }
 
-async function eventReset() {
-  // const now = new Date();
-  // const oneMius = new Date(now.getTime() - 60 * 60 * 1000);
+async function eventReset({ email }) {
   try {
-    // await prisma.user.updateMany({
-    //   where: {
-    //     event: {
-    //       lt: oneMius,
-    //       not: null,
-    //     },
-    //   },
-    //   data: {
-    //     event: null,
-    //   },
-    // });
     await prisma.user.updateMany({
+      where: {
+        email,
+      },
       data: {
         event: null,
       },
