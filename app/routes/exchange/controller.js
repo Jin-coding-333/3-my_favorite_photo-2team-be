@@ -7,7 +7,7 @@ const router = express.Router();
 
 // 포토카드 교환 제안 생성
 router.post(
-  "/:shopId/exchange",
+  "/cards/:shopId/exchange",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
     const { shopId } = req.params;
@@ -35,7 +35,7 @@ router.post(
 
 // 포토카드 교환 제안 승인과 거절
 router.post(
-  "/:exchangeId/exchange/:action",
+  "/cards/:exchangeId/exchange/:action",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
     const { exchangeId, action } = req.params;
@@ -61,7 +61,7 @@ router.post(
 
 // 포토카드 교환 제안 취소
 router.delete(
-  "/:exchangeId/exchange",
+  "/cards/:exchangeId/exchange",
   authMiddleware.verifyAccessToken,
   async (req, res) => {
     const { exchangeId } = req.params;
