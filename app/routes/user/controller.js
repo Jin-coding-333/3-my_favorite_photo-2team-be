@@ -69,9 +69,10 @@ user.get(
 user
   .get("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;
-    const user = await service.getUser({ email });
-    if (!!!user) return res.status(401).send(null);
-    res.status(201).send(user.event);
+    const update = await service.eventReset({ email });
+    console.log(update);
+    if (!!!update) return res.status(401).send(null);
+    res.status(201).send(true);
   })
   .post("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;
@@ -86,10 +87,7 @@ user
         },
       },
     });
-    console.log(update);
-
     if (!update) return res.status(401).send(false);
-
     res.status(200).send(true);
   });
 

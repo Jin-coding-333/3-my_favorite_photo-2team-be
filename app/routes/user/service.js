@@ -58,8 +58,9 @@ const getExchangeCards = async (userId) => {
   return cards;
 };
 
-const eventReset = async () => {
-  await userRepo.eventReset();
+const eventReset = async ({ email }) => {
+  await userRepo.eventReset({ email });
+  return true;
 };
 
 const service = {
