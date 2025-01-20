@@ -3,6 +3,7 @@ import express from "express";
 import auth from "./auth/controller.js";
 import user from "./user/controller.js";
 import shop from "./Shop/controller.js";
+import exchange from "./exchange/controller.js";
 
 const router = express.Router();
 
@@ -10,5 +11,6 @@ const router = express.Router();
 router.use("/auth", auth);
 router.use("/user", user);
 router.use("/shop", shop);
+router.use("/", exchange);
 
 export default router;
