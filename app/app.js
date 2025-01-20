@@ -3,6 +3,15 @@ import cors from "cors";
 import router from "./routes/index.js";
 import { ORIGIN, PORT } from "../config/config.js";
 import cookieParser from "cookie-parser";
+import fs from "fs";
+
+const uploadsDir = "uploads";
+
+// 폴더가 없으면 생성
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log("uploads 폴더가 생성되었습니다.");
+}
 
 const app = express();
 app.use(
