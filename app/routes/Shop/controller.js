@@ -56,6 +56,7 @@ app.get("/cards", async (req, res) => {
       where: searchQuery,
       orderBy: sortOption,
       include: {
+        user: true,
         card: true,
       },
     });
