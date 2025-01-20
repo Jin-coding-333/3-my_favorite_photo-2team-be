@@ -57,31 +57,36 @@ function userDataFilter(user) {
   }
 }
 
-// async function eventReset() {
-//   const now = new Date();
-//   const oneMius = new Date(now.getTime() - 60 * 60 * 1000);
-//   try {
-//     await prisma.user.updateMany({
-//       where: {
-//         event: {
-//           lt: oneMius,
-//           not: null,
-//         },
-//       },
-//       data: {
-//         event: null,
-//       },
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+async function eventReset() {
+  // const now = new Date();
+  // const oneMius = new Date(now.getTime() - 60 * 60 * 1000);
+  try {
+    // await prisma.user.updateMany({
+    //   where: {
+    //     event: {
+    //       lt: oneMius,
+    //       not: null,
+    //     },
+    //   },
+    //   data: {
+    //     event: null,
+    //   },
+    // });
+    await prisma.user.updateMany({
+      data: {
+        event: null,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 const userRepo = {
   findByEmail,
   userDataFilter,
   createUser,
-  // eventReset,
+  eventReset,
   updateUser,
 };
 export default userRepo;

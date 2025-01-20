@@ -69,9 +69,9 @@ user.get(
 user
   .get("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;
-    const user = await service.getUser({ email });
+    const user = await service.eventReset();
     if (!!!user) return res.status(401).send(null);
-    res.status(201).send(user.event);
+    res.status(201).send(true);
   })
   .post("/point", authMiddleware.verifyAccessToken, async (req, res) => {
     const { email } = req.user;

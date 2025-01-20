@@ -27,26 +27,6 @@ async function login({ email, password }) {
   const findUser = await userRepo.findByEmail(email);
   const next = await verifyPassword(password, findUser.password);
   if (next) {
-    const now = new Date();
-
-    if (!!!findUser.event) {
-      await userRepo.updateUser({
-        email,
-        data: {
-          event: now,
-        },
-      });
-    } else {
-      const timeDifference = now.getTime() - new Date(findUser.event).getTime();
-      if (timeDifference >= 60 * 60 * 1000)
-        await userRepo.updateUser({
-          email,
-          data: {
-            event: now,
-          },
-        });
-    }
-
     return userRepo.userDataFilter(findUser);
   } else return null;
 }
@@ -69,13 +49,6 @@ async function refreshToken({ email, refreshToken }) {
     error.code = 401;
     throw error;
   }
-  const now = new Date();
-  await userRepo.updateUser({
-    email,
-    data: {
-      event: now,
-    },
-  });
   return createToken(user);
 }
 
