@@ -9,14 +9,15 @@ const app = express();
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(cookieParser());
+app.options("*", cors());
 app.use(
   cors({
+    // origin: ORIGIN,
     origin: ["http://localhost:3000", "https://my-favorite-photo.onrender.com"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
-
 app.use("/api", router);
 
 app.listen(PORT, () => {
