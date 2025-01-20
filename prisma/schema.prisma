@@ -15,7 +15,7 @@ model User {
   point        Int            @default(0)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  event        DateTime       @default(now())
+  event        DateTime?
   card         Card[]
   notification Notification[]
   pointLog     PointLog[]
@@ -51,17 +51,17 @@ model Card {
 }
 
 model Shop {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  card      Card     @relation(fields: [cardId], references: [id])
-  cardId    String   @unique
-  totalQuantity     Int      
-  remainingQuantity Int    
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                Int      @id @default(autoincrement())
+  title             String
+  content           String
+  user              User     @relation(fields: [userId], references: [id])
+  userId            String
+  card              Card     @relation(fields: [cardId], references: [id])
+  cardId            String   @unique
+  totalQuantity     Int
+  remainingQuantity Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model Purchase {
