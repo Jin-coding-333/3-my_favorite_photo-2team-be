@@ -87,8 +87,8 @@ user
         },
       },
     });
-    if (!update) return res.status(401).send(false);
-    res.status(200).send(true);
+    if (!update) return res.status(401).send({ success: false });
+    res.status(200).send({ success: true, point });
   });
 
 /** 분 마다 이벤트 상태 변경 코드 */
