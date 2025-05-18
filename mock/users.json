@@ -1,63 +1,32 @@
 [
-    {
-      "email": "user1@example.com",
-      "nickName": "user1",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 100
-    },
-    {
-      "email": "user2@example.com",
-      "nickName": "user2",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 200
-    },
-    {
-      "email": "user3@example.com",
-      "nickName": "user3",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 300
-    },
-    {
-      "email": "user4@example.com",
-      "nickName": "user4",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 400
-    },
-    {
-      "email": "user5@example.com",
-      "nickName": "user5",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 500
-    },
-    {
-      "email": "user6@example.com",
-      "nickName": "user6",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 600
-    },
-    {
-      "email": "user7@example.com",
-      "nickName": "user7",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 700
-    },
-    {
-      "email": "user8@example.com",
-      "nickName": "user8",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 800
-    },
-    {
-      "email": "user9@example.com",
-      "nickName": "user9",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 900
-    },
-    {
-      "email": "user10@example.com",
-      "nickName": "user10",
-      "password": "$2b$10$NvRuROKuTkNZjnXbDSNr3.2wdAGlmQZ1mwUz18cKNPVWTrWzqUlF6",
-      "point": 1000
-    }
-  ]
-  
+  {
+    "email": "jisoo.kim@gmail.com",
+    "nickName": "지수사랑해",
+    "password": "$2b$10$8K1p/a0dR1LX6zKz8K1p/a0dR1LX6zKz8K1p/a0dR1LX6zKz8K1p",
+    "point": 1000
+  },
+  {
+    "email": "photographer_lee@naver.com",
+    "nickName": "사진사이즈",
+    "password": "$2b$10$P@ssw0rd2024!P@ssw0rd2024!P@ssw0rd2024!",
+    "point": 2000
+  },
+  {
+    "email": "nature_lover@daum.net",
+    "nickName": "자연사랑",
+    "password": "$2b$10$N@ture123!N@ture123!N@ture123!",
+    "point": 3000
+  },
+  {
+    "email": "travel_photo@kakao.com",
+    "nickName": "여행사진가",
+    "password": "$2b$10$Tr@vel2024!Tr@vel2024!Tr@vel2024!",
+    "point": 4000
+  },
+  {
+    "email": "camera_master@naver.com",
+    "nickName": "카메라마스터",
+    "password": "$2b$10$C@mera123!C@mera123!C@mera123!",
+    "point": 5000
+  }
+]

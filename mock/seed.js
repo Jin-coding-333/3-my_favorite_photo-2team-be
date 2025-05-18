@@ -8,28 +8,39 @@ const cardMock = JSON.parse(
   await readFile(new URL("./cards.json", import.meta.url))
 );
 
-async function userAdd(mockData) {
-  const user = await prisma.user.findMany({});
-  return [...mockData].map((v) => {
-    const random = Math.floor(Math.random() * user.length);
-    return { ...v, userId: user[random].id };
-  });
-}
-
-/// user 의 비밀번호는 1234입니다.
 async function main() {
   try {
+    // 기존 데이터 삭제
+    await prisma.card.deleteMany();
     await prisma.user.deleteMany();
+
+    // 사용자 데이터 생성
+    console.log("사용자 데이터 생성중입니다...");
     await prisma.user.createMany({
       data: userMock,
     });
-    const card = await userAdd(cardMock);
-    await prisma.card.deleteMany();
+
+    // 생성된 사용자 조회
+    const users = await prisma.user.findMany();
+
+    // 카드 데이터에 userId 추가
+    const cardsWithUserId = cardMock.map(card => ({
+      ...card,
+      userId: users[Math.floor(Math.random() * users.length)].id
+    }));
+
+    // 카드 데이터 생성
+    console.log("카드 데이터 생성중입니다...");
     await prisma.card.createMany({
-      data: card,
+      data: cardsWithUserId,
     });
+
+    console.log("시딩 완료✅!");
   } catch (err) {
-    console.error(err);
+    console.error("에러 발생⚠️:", err);
+  } finally {
+    await prisma.$disconnect();
   }
 }
+
 main();
