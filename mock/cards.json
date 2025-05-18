@@ -1,102 +1,242 @@
 [
   {
-    "name": "Dragon Slayer",
-    "grade": "RARE",
-    "genre": "여행",
-    "price": 1,
-    "remainingQuantity": 10,
-    "totalQuantity": 50,
-    "description": "A powerful sword with mystical powers.",
-    "imagePath": "/uploads/404.svg"
+    "name": "고대의 검",
+    "grade": "EPIC",
+    "genre": "사물",
+    "price": 4,
+    "description": "고대 전사들이 사용하던 신비로운 검을 담은 카드입니다.",
+    "imagePath": "/uploads/고대검.jpg"
   },
   {
-    "name": "Phoenix Feather",
+    "name": "불사조의 깃털",
     "grade": "LEGENDARY",
     "genre": "풍경",
     "price": 5,
-    "remainingQuantity": 5,
-    "totalQuantity": 30,
-    "description": "A feather of the mythical phoenix, said to bring eternal life.",
-    "imagePath": "/uploads/404.svg"
+    "description": "전설의 불사조의 깃털로, 영생을 가져다준다고 합니다.",
+    "imagePath": "/uploads/오로라.jpg"
   },
   {
-    "name": "Elven Bow",
+    "name": "엘프의 활",
     "grade": "EPIC",
     "genre": "인물",
     "price": 1,
-    "remainingQuantity": 15,
-    "totalQuantity": 40,
     "description": "A finely crafted bow used by the elven warriors.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/대나무.jpg"
   },
   {
-    "name": "Mystic Orb",
+    "name": "신비한 구슬",
     "grade": "LEGENDARY",
     "genre": "사물",
     "price": 3,
-    "remainingQuantity": 8,
-    "totalQuantity": 20,
     "description": "An orb that holds the power of the elements.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/구름정원.jpg"
   },
   {
-    "name": "Vampire Fang",
+    "name": "뱀파이어의 송곳니",
     "grade": "RARE",
     "genre": "여행",
     "price": 8,
-    "remainingQuantity": 20,
-    "totalQuantity": 60,
     "description": "A fang of a powerful vampire lord.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/고대목걸이.jpg"
   },
   {
-    "name": "Wizard's Hat",
+    "name": "마법사의 모자",
     "grade": "EPIC",
     "genre": "풍경",
     "price": 1,
-    "remainingQuantity": 7,
-    "totalQuantity": 25,
     "description": "A hat that boosts the wearer's magical abilities.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/신비폭포.jpg"
   },
   {
-    "name": "Goblin Shield",
+    "name": "고블린의 방패",
     "grade": "COMMON",
     "genre": "인물",
     "price": 3,
-    "remainingQuantity": 50,
-    "totalQuantity": 100,
     "description": "A sturdy shield used by goblin warriors.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/청동거울.jpg"
   },
   {
-    "name": "Demonic Amulet",
+    "name": "악마의 부적",
     "grade": "LEGENDARY",
     "genre": "사물",
     "price": 4,
-    "remainingQuantity": 3,
-    "totalQuantity": 10,
     "description": "An amulet infused with demonic energy.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/고대목걸이.jpg"
   },
   {
-    "name": "Knight's Armor",
+    "name": "기사의 갑옷",
     "grade": "RARE",
     "genre": "여행",
     "price": 2,
-    "remainingQuantity": 12,
-    "totalQuantity": 30,
     "description": "A protective armor worn by valiant knights.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/전사초상.jpg"
   },
   {
-    "name": "Pirate's Cutlass",
+    "name": "해적의 검",
     "grade": "EPIC",
     "genre": "풍경",
     "price": 1,
-    "remainingQuantity": 9,
-    "totalQuantity": 35,
     "description": "A cutlass used by infamous pirates.",
-    "imagePath": "/uploads/404.svg"
+    "imagePath": "/uploads/해변일몰.jpg"
+  },
+  {
+    "name": "히말라야의 눈",
+    "grade": "LEGENDARY",
+    "genre": "풍경",
+    "price": 6,
+    "description": "히말라야의 신비로운 눈을 담은 보석입니다.",
+    "imagePath": "/uploads/히말라야등산.jpg"
+  },
+  {
+    "name": "고대의 항아리",
+    "grade": "RARE",
+    "genre": "사물",
+    "price": 3,
+    "description": "고대 문명의 비밀을 담고 있는 항아리입니다.",
+    "imagePath": "/uploads/항아리.jpg"
+  },
+  {
+    "name": "화가의 자화상",
+    "grade": "EPIC",
+    "genre": "인물",
+    "price": 4,
+    "description": "유명 화가의 자화상이 담긴 카드입니다.",
+    "imagePath": "/uploads/자화상.jpg"
+  },
+  {
+    "name": "북극의 빛",
+    "grade": "LEGENDARY",
+    "genre": "풍경",
+    "price": 7,
+    "description": "북극의 신비로운 오로라를 담은 카드입니다.",
+    "imagePath": "/uploads/오로라.jpg"
+  },
+  {
+    "name": "알프스의 설산",
+    "grade": "RARE",
+    "genre": "풍경",
+    "price": 3,
+    "description": "알프스의 아름다운 설산을 담은 카드입니다.",
+    "imagePath": "/uploads/알프스설산.jpg"
+  },
+  {
+    "name": "신비한 폭포",
+    "grade": "EPIC",
+    "genre": "풍경",
+    "price": 4,
+    "description": "숲속의 신비한 폭포를 담은 카드입니다.",
+    "imagePath": "/uploads/신비폭포.jpg"
+  },
+  {
+    "name": "세종대왕의 초상",
+    "grade": "LEGENDARY",
+    "genre": "인물",
+    "price": 8,
+    "description": "조선의 위대한 임금 세종대왕의 초상화입니다.",
+    "imagePath": "/uploads/세종대왕.jpg"
+  },
+  {
+    "name": "산맥의 노을",
+    "grade": "RARE",
+    "genre": "풍경",
+    "price": 2,
+    "description": "아름다운 산맥의 노을을 담은 카드입니다.",
+    "imagePath": "/uploads/산맥노을.jpg"
+  },
+  {
+    "name": "방콕의 밤",
+    "grade": "EPIC",
+    "genre": "여행",
+    "price": 5,
+    "description": "방콕의 화려한 밤거리를 담은 카드입니다.",
+    "imagePath": "/uploads/방콕.jpg"
+  },
+  {
+    "name": "행복한 미소",
+    "grade": "COMMON",
+    "genre": "인물",
+    "price": 1,
+    "description": "순수한 행복이 담긴 미소를 담은 카드입니다.",
+    "imagePath": "/uploads/미소.jpeg"
+  },
+  {
+    "name": "몽골의 사막",
+    "grade": "RARE",
+    "genre": "풍경",
+    "price": 3,
+    "description": "광활한 몽골 사막의 풍경을 담은 카드입니다.",
+    "imagePath": "/uploads/몽골사막.jpg"
+  },
+  {
+    "name": "마추픽추의 비밀",
+    "grade": "LEGENDARY",
+    "genre": "여행",
+    "price": 6,
+    "description": "잉카 문명의 신비로운 유적을 담은 카드입니다.",
+    "imagePath": "/uploads/마추픽추.jpg"
+  },
+  {
+    "name": "대나무 숲",
+    "grade": "EPIC",
+    "genre": "풍경",
+    "price": 4,
+    "description": "고요한 대나무 숲의 풍경을 담은 카드입니다.",
+    "imagePath": "/uploads/대나무.jpg"
+  },
+  {
+    "name": "기차 여행",
+    "grade": "RARE",
+    "genre": "여행",
+    "price": 3,
+    "description": "아름다운 풍경을 지나가는 기차 여행을 담은 카드입니다.",
+    "imagePath": "/uploads/기차여행.jpg"
+  },
+  {
+    "name": "구름의 정원",
+    "grade": "LEGENDARY",
+    "genre": "풍경",
+    "price": 7,
+    "description": "구름 위에 떠있는 신비한 정원을 담은 카드입니다.",
+    "imagePath": "/uploads/구름정원.jpg"
+  },
+  {
+    "name": "고대의 목걸이",
+    "grade": "RARE",
+    "genre": "사물",
+    "price": 5,
+    "description": "고대 문명의 신비로운 목걸이를 담은 카드입니다.",
+    "imagePath": "/uploads/고대목걸이.jpg"
+  },
+  {
+    "name": "산의 정상",
+    "grade": "RARE",
+    "genre": "풍경",
+    "price": 3,
+    "description": "아름다운 산의 정상을 담은 카드입니다.",
+    "imagePath": "/uploads/image_mount.jpg"
+  },
+  {
+    "name": "신비한 숲",
+    "grade": "EPIC",
+    "genre": "풍경",
+    "price": 4,
+    "description": "신비로운 숲의 풍경을 담은 카드입니다.",
+    "imagePath": "/uploads/image1.png"
+  },
+  {
+    "name": "고대의 유적",
+    "grade": "LEGENDARY",
+    "genre": "여행",
+    "price": 6,
+    "description": "고대 문명의 신비로운 유적을 담은 카드입니다.",
+    "imagePath": "/uploads/image2.png"
+  },
+  {
+    "name": "신비한 동굴",
+    "grade": "RARE",
+    "genre": "풍경",
+    "price": 3,
+    "description": "신비로운 동굴의 풍경을 담은 카드입니다.",
+    "imagePath": "/uploads/image3.png"
   }
 ]

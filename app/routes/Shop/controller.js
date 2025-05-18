@@ -9,7 +9,7 @@ const app = express.Router();
 //카드 목록 조회
 app.get("/cards", async (req, res) => {
   try {
-    const {
+    const {  
       orderBy = "desc",
       keyword = "",
       grade = "",
