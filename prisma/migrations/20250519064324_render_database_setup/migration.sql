@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "event" DROP NOT NULL,
+ALTER COLUMN "event" DROP DEFAULT;
