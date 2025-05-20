@@ -6,20 +6,6 @@ const prisma = new PrismaClient();
 
 const app = express.Router();
 
-// test api
-app.get("/test", async (req, res) => {
-  try {
-    const test = await prisma.shop.findMany();
-    const testMessage = "test 성공!✅";
-    res.status(httpState.success.number).json(testMessage, test);
-  } catch (error) {
-    console.log({ error: error });
-    res
-      .status(httpState.badRequest.number)
-      .json({ error: "Test " });
-  }
-});
-
 //카드 목록 조회
 app.get("/cards", async (req, res) => {
   try {
