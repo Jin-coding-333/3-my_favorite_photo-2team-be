@@ -6,40 +6,42 @@ const prisma = new PrismaClient();
 
 const app = express.Router();
 
+// test api
+app.get("/test", async (req, res) => {
+  try {
+    const test = await prisma.shop.findMany();
+    const testMessage = "test 성공!✅";
+    res.status(httpState.success.number).json(testMessage, test);
+  } catch (error) {
+    console.log({ error: error });
+    res
+      .status(httpState.badRequest.number)
+      .json({ error: "Test " });
+  }
+});
+
 //카드 목록 조회
 app.get("/cards", async (req, res) => {
   try {
-    const {  
+    const {
       orderBy = "desc",
       keyword = "",
       grade = "",
       genre = "",
-      status = "",
     } = req.query;
 
     const searchQuery = {
       AND: [
         keyword
           ? {
-              OR: [
-                { title: { contains: keyword, mode: "insensitive" } },
-                { content: { contains: keyword, mode: "insensitive" } },
-              ],
-            }
+            OR: [
+              { name: { contains: keyword, mode: "insensitive" } },
+              { description: { contains: keyword, mode: "insensitive" } },
+            ],
+          }
           : {},
-        grade ? { card: { grade } } : {},
-
-        genre ? { card: { genre } } : {},
-
-        status === "onSale"
-          ? {
-              remainingQuantity: { gt: 0 }, // remainingQuantity > 0
-            }
-          : status === "soldOut"
-            ? {
-                remainingQuantity: { equals: 0 }, // remainingQuantity = 0
-              }
-            : {}, // status가 없으면 필터링 없음
+        grade ? { grade } : {},
+        genre ? { genre } : {},
       ],
     };
 
@@ -49,15 +51,14 @@ app.get("/cards", async (req, res) => {
         : orderBy === "asc"
           ? { createdAt: "asc" }
           : orderBy === "manyPoint"
-            ? { point: "desc" }
-            : { point: "asc" };
+            ? { price: "desc" }
+            : { price: "asc" };
 
-    const cardList = await prisma.shop.findMany({
+    const cardList = await prisma.card.findMany({
       where: searchQuery,
       orderBy: sortOption,
       include: {
         user: { select: { id: true, nickName: true } },
-        card: true,
       },
     });
     res.status(httpState.success.number).json(cardList);
