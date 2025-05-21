@@ -17,7 +17,7 @@ const app = express();
 app.use(
   cors({
     // origin: ORIGIN,
-    origin: ["http://localhost:3000", "https://my-favorite-photo.onrender.com"],
+    origin: ["http://localhost:3000", "https://my-favorite-photo.onrender.com", "https://3-my-favorite-photo-2team-fe.vercel.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
@@ -25,7 +25,6 @@ app.use(
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(cookieParser());
-
 app.use("/api", router);
 
 app.listen(PORT, () => {
